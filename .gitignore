@@ -1,0 +1,9 @@
+bin/
+docs/
+include/
+lib/
+resources/
+LICENCE
+Makefile
+vendor/
+THONW.sav
