@@ -1,20 +1,23 @@
 #include "serialisation.hpp"
-#include <jansson.h>
 #include <fstream>
 #pragma once
 
+using namespace playerNs;
+
 void SaveGameState(Player &player)
 {
+
     // collect data to parse
     int positionX = player.position.x;
     int positionY = player.position.y;
 
     // turn data into json
+    nlohmann::json j = player;
 
     // save JSON to file
     std::ofstream file("THONW.sav");
 
-    file << positionX << std::endl;
+    file << j << std::endl;
 
     file.close();
 }

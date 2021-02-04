@@ -3,6 +3,8 @@
 #include <array>
 #pragma once
 
+using namespace playerNs;
+
 // "namespaces exist to avoid identical name conflicts. Allow encompasses entire codebases into a project" - Da Gonz
 // using namespace raylib;
 

@@ -1,14 +1,21 @@
 #include <raylib-cpp.hpp>
+#include <nlohmann/json.hpp>
 #pragma once
 
-class Player
+namespace playerNs
 {
-public:
-	Texture2D texture;
-	raylib::Vector2 position;
-	raylib::Vector2 speed;
-	raylib::Vector2 direction;
-	float friction;
+	class Player
+	{
+	public:
+		Texture2D texture;
+		raylib::Vector2 position;
+		raylib::Vector2 speed;
+		raylib::Vector2 direction;
+		float friction;
 
-	Player(Texture2D texture, raylib::Vector2 position);
-};
+		Player(Texture2D texture, raylib::Vector2 position);
+	};
+
+	void to_json(nlohmann::json &j, const Player &p);
+
+} // namespace playerNS

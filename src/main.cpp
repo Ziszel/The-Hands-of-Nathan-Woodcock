@@ -6,6 +6,8 @@
 #include <array>
 #include <iostream>
 
+using namespace playerNs;
+
 int main()
 {
 
