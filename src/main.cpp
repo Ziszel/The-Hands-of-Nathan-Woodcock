@@ -38,7 +38,7 @@ int main()
 	// Camera
 	Camera2D camera = {0};
 	camera.target = (raylib::Vector2){player->position.x + 20, player->position.y + 20};
-	camera.offset = (raylib::Vector2){screenWidth / 2, screenHeight / 2};
+	camera.offset = (raylib::Vector2)(screenWidth / 2, screenHeight / 2);
 	camera.rotation = 0.0f;
 	camera.zoom = 1.0f;
 
