@@ -6,8 +6,6 @@
 #include <array>
 #include <iostream>
 
-using namespace playerNs;
-
 int main()
 {
 
@@ -53,6 +51,8 @@ int main()
 
 		if (IsKeyDown('A'))
 		{
+			// detected but player not moving, in weird position.
+			std::cout << "We're moving" << std::endl;
 			player->speed.x += -2.0f * deltaTime;
 		}
 		else if (IsKeyDown('D'))
