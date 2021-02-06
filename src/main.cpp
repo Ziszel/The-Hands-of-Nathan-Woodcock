@@ -4,7 +4,6 @@
 #include "serialisation.hpp"
 #include <raylib-cpp.hpp>
 #include <array>
-#include <iostream>
 
 int main()
 {
@@ -66,6 +65,10 @@ int main()
 		if (IsKeyPressed('S'))
 		{
 			SaveGameState(*player);
+		}
+		else if(IsKeyPressed('L'))
+		{
+			LoadGameState(*player);
 		}
 
 		player->position.x += player->speed.x;

@@ -1,9 +1,10 @@
 #include "player.hpp"
 #include <nlohmann/json.hpp>
 #include <iomanip>
+#include <iostream>
 #include <fstream>
 #pragma once
 
 void SaveGameState(Player &player);
 
-void LoadGameState();
+void LoadGameState(Player &player);

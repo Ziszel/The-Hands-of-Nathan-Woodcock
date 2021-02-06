@@ -18,15 +18,21 @@ void SaveGameState(Player &player)
     file.close();
 }
 
-void LoadGameState()
+void LoadGameState(Player &player)
 {
-    // verify a file exists, if so
-    // if ()
-    // {
-    //     std::ifstream i("THONW.sav");
-    //     nlohmann::json j;
-    //     i >> j;
-    // }
+    // verify a file exists, if so load and convert to JSON, assign to player
+    std::ifstream saveData("THONW.sav");
+    if (saveData)
+    {
+        nlohmann::json j;
+        saveData >> j;
+        player.position.x = j["position.x"].get<float>();
+        player.position.y = j["position.y"].get<float>();
+    }
+    else
+    {
+        std::cout << "There is no data to load." << std::endl;
+    }
 
     // read data
 
