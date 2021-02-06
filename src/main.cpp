@@ -39,8 +39,6 @@ int main()
 	camera.rotation = 0.0f;
 	camera.zoom = 1.0f;
 
-	// TODO: load game if save file exists.
-
 	SetWindowPosition(800, 800);
 	// Main game loop
 	while (!w.ShouldClose()) // Detect window close button or ESC key
@@ -64,11 +62,11 @@ int main()
 
 		if (IsKeyPressed('S'))
 		{
-			SaveGameState(*player);
+			SaveGameState(*player, scrollables);
 		}
 		else if(IsKeyPressed('L'))
 		{
-			LoadGameState(*player);
+			LoadGameState(*player, scrollables);
 		}
 
 		player->position.x += player->speed.x;
