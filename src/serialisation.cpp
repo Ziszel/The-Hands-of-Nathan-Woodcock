@@ -1,7 +1,4 @@
 #include "serialisation.hpp"
-#include <fstream>
-
-using namespace playerNs;
 
 void SaveGameState(Player &player)
 {

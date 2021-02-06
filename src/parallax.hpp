@@ -15,4 +15,4 @@ public:
 	Scrollable(Texture2D texture, raylib::Vector2 position, int order, float distance);
 };
 
-void updateScrollables(std::array<Scrollable, 2> &scrollables, playerNs::Player player);
+void updateScrollables(std::array<Scrollable, 2> &scrollables, Player player);

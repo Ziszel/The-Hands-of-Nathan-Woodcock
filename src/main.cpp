@@ -18,6 +18,8 @@ int main()
 	raylib::Color textColor(LIGHTGRAY);
 	raylib::Window w(screenWidth, screenHeight, "The Hands of Nathan Woodcock");
 
+	SetTargetFPS(fps);
+
 	// Load Resources
 	Texture2D playerTex = LoadTexture("resources/player.png");
 	Texture2D midGroundTex = LoadTexture("resources/midground.png");
@@ -25,22 +27,20 @@ int main()
 
 	// Create game objects
 	Scrollable midGround = Scrollable(midGroundTex, raylib::Vector2(0.0f, 0.0f), 1, 2.0f);
-	//Scrollable nearGround = Scrollable();
+
 	Scrollable backGround = Scrollable(backGroundTex, raylib::Vector2(0.0f, 0.0f), 0, 8.0f);
-	playerNs::Player *player = new playerNs::Player(playerTex, raylib::Vector2(200.0f, 240.0f));
+	Player *player = new Player(playerTex, raylib::Vector2(screenWidth / 2, screenHeight / 2));
 
 	std::array<Scrollable, 2> scrollables = {backGround, midGround};
 
 	// Camera
 	Camera2D camera = {0};
 	camera.target = (raylib::Vector2){player->position.x + 20, player->position.y + 20};
-	camera.offset = (raylib::Vector2)(screenWidth / 2, screenHeight / 2);
+	camera.offset = (raylib::Vector2){screenWidth / 2, screenHeight / 2};
 	camera.rotation = 0.0f;
 	camera.zoom = 1.0f;
 
-	SetTargetFPS(fps);
-
-	// TODO: Add code to load game if save file exists.
+	// TODO: load game if save file exists.
 
 	SetWindowPosition(800, 800);
 	// Main game loop

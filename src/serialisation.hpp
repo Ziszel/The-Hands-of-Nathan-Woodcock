@@ -1,7 +1,8 @@
 #include "player.hpp"
 #include <nlohmann/json.hpp>
+#include <fstream>
 #pragma once
 
-void SaveGameState(playerNs::Player &player);
+void SaveGameState(Player &player);
 
 void LoadGameState();
