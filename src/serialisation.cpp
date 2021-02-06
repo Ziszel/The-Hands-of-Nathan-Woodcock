@@ -13,7 +13,7 @@ void SaveGameState(Player &player)
     // save JSON to file
     std::ofstream file("THONW.sav");
 
-    file << j << std::endl;
+    file << std::setw(4) << j << std::endl;
 
     file.close();
 }
@@ -21,6 +21,12 @@ void SaveGameState(Player &player)
 void LoadGameState()
 {
     // verify a file exists, if so
+    // if ()
+    // {
+    //     std::ifstream i("THONW.sav");
+    //     nlohmann::json j;
+    //     i >> j;
+    // }
 
     // read data
 
