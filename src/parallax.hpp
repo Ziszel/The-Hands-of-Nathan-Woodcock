@@ -3,8 +3,6 @@
 #include <array>
 #pragma once
 
-using namespace playerNs;
-
 // A class which represents an object to be scrolled.
 class Scrollable
 {
@@ -17,4 +15,4 @@ public:
 	Scrollable(Texture2D texture, raylib::Vector2 position, int order, float distance);
 };
 
-void updateScrollables(std::array<Scrollable, 2> &scrollables, Player player);
+void updateScrollables(std::array<Scrollable, 2> &scrollables, playerNs::Player player);

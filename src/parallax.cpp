@@ -12,12 +12,11 @@ Scrollable::Scrollable(Texture2D texture, raylib::Vector2 position, int order, f
 
 // A function that takes in an array of scrollable objects, and
 // Moves them via their params in the update function.
-void updateScrollables(std::array<Scrollable, 2> &scrollables, Player player)
+void updateScrollables(std::array<Scrollable, 2> &scrollables, playerNs::Player player)
 {
 	player.direction = UnitVectorisation(VectorMagnitude(player.position), player.position);
-	//std::cout << "player direction: ";
-	//std::cout << "X: " << player.direction.x << " Y: " << player.direction.y;
-	//for (int i; i < sizeof(&scrollables) / sizeof(&scrollables[0]); i++)
+	std::cout << "X: " << player.direction.x << std::endl;
+	std::cout << " Y: " << player.direction.y << std::endl;
 	for (int i = 0; i < scrollables.size(); i++)
 	{
 		//Scrollable s = scrollables.at(i);

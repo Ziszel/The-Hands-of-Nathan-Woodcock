@@ -1,11 +1,12 @@
 #include "serialisation.hpp"
 #include <fstream>
 
+using namespace playerNs;
+
 void SaveGameState(Player &player)
 {
-    //const playerNs::Player p = player;
-    // Hitting an undefined reference to nlohmann::to_json.
-    // TODO: fix error to enable JSON serialisation/saving.
+    // Hitting an undefined reference to nlohmann::to_json. with namespaces.
+    // using 'large' boilerplate version for now
 
     //turn data into json
     nlohmann::json j;

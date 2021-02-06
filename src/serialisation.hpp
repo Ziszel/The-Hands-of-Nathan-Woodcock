@@ -2,8 +2,6 @@
 #include <nlohmann/json.hpp>
 #pragma once
 
-using namespace playerNs;
-
-void SaveGameState(Player &player);
+void SaveGameState(playerNs::Player &player);
 
 void LoadGameState();

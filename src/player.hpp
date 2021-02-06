@@ -16,7 +16,7 @@ namespace playerNs
 		float friction;
 
 		Player(Texture2D texture, raylib::Vector2 position);
-		Player() = default;
+		//Player() = default;
 	};
 
 	//void to_json(nlohmann::json &j, const Player &p);
