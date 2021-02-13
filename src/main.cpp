@@ -60,6 +60,24 @@ int main()
 			player->speed.x *= player->friction;
 		}
 
+		if (IsKeyPressed('W') && player->inAir == false)
+		{
+			// move player up.
+			player->speed.y -= 500.0f * deltaTime;
+			// We are now in the air
+			player->inAir = true;
+		}
+		if (player->position.y < player->groundHeight && player->inAir == true)
+		{
+			// player must now be in the air, stop them jumping again,
+			// and slowly bring them down.
+			player->speed.y += player->gravity * deltaTime;
+		}
+		if (player->position.y > 240 && player->inAir == true)
+		{
+			player->inAir = false;
+		}
+
 		if (IsKeyPressed('S'))
 		{
 			SaveGameState(*player, scrollables);
@@ -69,7 +87,10 @@ int main()
 			LoadGameState(*player, scrollables);
 		}
 
+		std::cout << player->position.y << std::endl;
+		std::cout << player->inAir << std::endl;
 		player->position.x += player->speed.x;
+		player->position.y += player->speed.y;
 		updateScrollables(scrollables, *player);
 
 		// update the camera
