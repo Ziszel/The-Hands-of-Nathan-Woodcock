@@ -49,13 +49,13 @@ int main()
 		// movement is detected but nothing happens on screen.
 		if (IsKeyDown('A'))
 		{
-			player->speed.x += -2.0f * deltaTime;
+			player->speed.x += -4.0f * deltaTime;
 		}
 		else if (IsKeyDown('D'))
 		{
-			player->speed.x += 2.0f * deltaTime;
+			player->speed.x += 4.0f * deltaTime;
 		}
-		else
+		else if (player-> inAir == false)
 		{
 			player->speed.x *= player->friction;
 		}
