@@ -3,11 +3,7 @@
 #include <array>
 #pragma once
 
-// "namespaces exist to avoid identical name conflicts. Allow encompasses entire codebases into a project" - Da Gonz
-// using namespace raylib;
-
-// A structure which represents an object to be scrolled.
-// TODO: Turn this struct into a class :ok
+// A class which represents an object to be scrolled.
 class Scrollable
 {
 public:

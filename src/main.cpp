@@ -4,7 +4,6 @@
 #include "serialisation.hpp"
 #include <raylib-cpp.hpp>
 #include <array>
-#include <iostream>
 
 int main()
 {
@@ -16,22 +15,22 @@ int main()
 	float deltaTime = 0.0f;
 
 	raylib::Color textColor(LIGHTGRAY);
-	raylib::Window w(screenWidth, screenHeight, "C++ Parallax Scrolling Test");
+	raylib::Window w(screenWidth, screenHeight, "The Hands of Nathan Woodcock");
 
 	SetTargetFPS(fps);
 
 	// Load Resources
 	Texture2D playerTex = LoadTexture("resources/player.png");
-	Texture2D nearGroundTex = LoadTexture("resources/midground.png");
+	Texture2D midGroundTex = LoadTexture("resources/midground.png");
 	Texture2D backGroundTex = LoadTexture("resources/background.png");
 
 	// Create game objects
-	Scrollable nearGround = Scrollable(nearGroundTex, raylib::Vector2(0.0f, 0.0f), 1, 2.0f);
-	//Scrollable midGround = Scrollable();
+	Scrollable midGround = Scrollable(midGroundTex, raylib::Vector2(0.0f, 0.0f), 1, 2.0f);
+
 	Scrollable backGround = Scrollable(backGroundTex, raylib::Vector2(0.0f, 0.0f), 0, 8.0f);
 	Player *player = new Player(playerTex, raylib::Vector2(screenWidth / 2, screenHeight / 2));
 
-	std::array<Scrollable, 2> scrollables = {backGround, nearGround};
+	std::array<Scrollable, 2> scrollables = {backGround, midGround};
 
 	// Camera
 	Camera2D camera = {0};
@@ -40,8 +39,6 @@ int main()
 	camera.rotation = 0.0f;
 	camera.zoom = 1.0f;
 
-	// Attempt to load the game
-
 	SetWindowPosition(800, 800);
 	// Main game loop
 	while (!w.ShouldClose()) // Detect window close button or ESC key
@@ -49,6 +46,7 @@ int main()
 		// Update
 		deltaTime = GetFrameTime();
 
+		// movement is detected but nothing happens on screen.
 		if (IsKeyDown('A'))
 		{
 			player->speed.x += -2.0f * deltaTime;
@@ -64,7 +62,11 @@ int main()
 
 		if (IsKeyPressed('S'))
 		{
-			SaveGameState(*player);
+			SaveGameState(*player, scrollables);
+		}
+		else if(IsKeyPressed('L'))
+		{
+			LoadGameState(*player, scrollables);
 		}
 
 		player->position.x += player->speed.x;
@@ -79,14 +81,16 @@ int main()
 
 			BeginMode2D(camera);
 
-			// Draw background layers
-			for (auto &s : scrollables)
-			{
-				DrawTextureEx(s.texture, s.position, 0.0f, 2.0f, WHITE);
-			}
+				// Draw background layers
+				for (auto &s : scrollables)
+				{
+					DrawTextureEx(s.texture, s.position, 0.0f, 2.0f, WHITE);
+				}
 
-			// Draw Player
-			DrawTextureEx(player->texture, player->position, 0.0f, 2.0f, WHITE);
+				// Draw Player
+				DrawTextureEx(player->texture, player->position, 0.0f, 2.0f, WHITE);
+
+			EndMode2D();
 		EndDrawing();
 	}
 
