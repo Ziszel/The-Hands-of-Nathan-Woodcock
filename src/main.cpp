@@ -73,9 +73,11 @@ int main()
 			// and slowly bring them down.
 			player->speed.y += player->gravity * deltaTime;
 		}
-		if (player->position.y > 240 && player->inAir == true)
+		if (player->position.y > 240)
 		{
 			player->inAir = false;
+			player->speed.y = 0;
+			player->position.y = 240;
 		}
 
 		if (IsKeyPressed('S'))
