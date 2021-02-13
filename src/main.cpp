@@ -49,15 +49,35 @@ int main()
 		// movement is detected but nothing happens on screen.
 		if (IsKeyDown('A'))
 		{
-			player->speed.x += -2.0f * deltaTime;
+			player->speed.x += -4.0f * deltaTime;
 		}
 		else if (IsKeyDown('D'))
 		{
-			player->speed.x += 2.0f * deltaTime;
+			player->speed.x += 4.0f * deltaTime;
 		}
-		else
+		else if (player-> inAir == false)
 		{
 			player->speed.x *= player->friction;
+		}
+
+		if (IsKeyPressed('W') && player->inAir == false)
+		{
+			// move player up.
+			player->speed.y -= 500.0f * deltaTime;
+			// We are now in the air
+			player->inAir = true;
+		}
+		if (player->position.y < player->groundHeight && player->inAir == true)
+		{
+			// player must now be in the air, stop them jumping again,
+			// and slowly bring them down.
+			player->speed.y += player->gravity * deltaTime;
+		}
+		if (player->position.y > 240)
+		{
+			player->inAir = false;
+			player->speed.y = 0;
+			player->position.y = 240;
 		}
 
 		if (IsKeyPressed('S'))
@@ -69,7 +89,10 @@ int main()
 			LoadGameState(*player, scrollables);
 		}
 
+		std::cout << player->position.y << std::endl;
+		std::cout << player->inAir << std::endl;
 		player->position.x += player->speed.x;
+		player->position.y += player->speed.y;
 		updateScrollables(scrollables, *player);
 
 		// update the camera

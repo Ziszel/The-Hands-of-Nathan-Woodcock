@@ -11,7 +11,10 @@ public:
 	raylib::Vector2 position;
 	raylib::Vector2 speed;
 	raylib::Vector2 direction;
-	float friction;
+	const float friction = 0.92f;
+	const int groundHeight = 240;
+	const float gravity = 10.0f;
+	bool inAir;
 
 	Player(Texture2D texture, raylib::Vector2 position);
 	Player() = default;
