@@ -96,7 +96,7 @@ int main()
 		updateScrollables(scrollables, *player);
 
 		// update the camera
-		camera.target = (raylib::Vector2){ player->position.x + 20, player->position.y + 20};
+		camera.target = (raylib::Vector2){ player->position.x + 20 + player->speed.x * 7, player->position.y + 20};
 
 		// Draw
 		BeginDrawing();
