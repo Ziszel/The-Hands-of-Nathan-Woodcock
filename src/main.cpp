@@ -72,6 +72,8 @@ int main()
 			// and slowly bring them down.
 			player->speed.y += player->gravity * deltaTime;
 		}
+		// this controls if the player is on the floor, replace with tiled
+		// logic once implemented
 		if (player->position.y > 240)
 		{
 			player->inAir = false;
@@ -100,7 +102,7 @@ int main()
 			camera.target = (raylib::Vector2){ player->position.x + 20 + player->speed.x * 7, player->position.y + 20};
 		}
 		else {
-			camera.target = (raylib::Vector2){ player->position.x + 20 + 12.0f, player->position.y + 20};
+			camera.target = (raylib::Vector2){ player->position.x + 20 + player->maxSpeed, player->position.y + 20};
 		}
 		
 

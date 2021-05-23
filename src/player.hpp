@@ -12,7 +12,7 @@ public:
 	raylib::Vector2 speed;
 	raylib::Vector2 direction;
 	const float maxSpeed = 12.0f;
-	const float acceleration = 4.0f;
+	const float acceleration = 8.0f;
 	const float friction = 0.92f;
 	const int groundHeight = 240;
 	const float gravity = 10.0f;
