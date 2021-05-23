@@ -46,14 +46,13 @@ int main()
 		// Update
 		deltaTime = GetFrameTime();
 
-		// movement is detected but nothing happens on screen.
-		if (IsKeyDown('A'))
+		if (IsKeyDown('A') && player->speed.x > -player->maxSpeed)
 		{
-			player->speed.x += -4.0f * deltaTime;
+			player->speed.x += -player->acceleration * deltaTime;
 		}
-		else if (IsKeyDown('D'))
+		else if (IsKeyDown('D') && player->speed.x < player->maxSpeed)
 		{
-			player->speed.x += 4.0f * deltaTime;
+			player->speed.x += player->acceleration * deltaTime;
 		}
 		else if (player-> inAir == false)
 		{
@@ -96,7 +95,14 @@ int main()
 		updateScrollables(scrollables, *player);
 
 		// update the camera
-		camera.target = (raylib::Vector2){ player->position.x + 20 + player->speed.x * 7, player->position.y + 20};
+		if (player->speed.x != player->maxSpeed || player->speed.x != -player->maxSpeed)
+		{
+			camera.target = (raylib::Vector2){ player->position.x + 20 + player->speed.x * 7, player->position.y + 20};
+		}
+		else {
+			camera.target = (raylib::Vector2){ player->position.x + 20 + 12.0f, player->position.y + 20};
+		}
+		
 
 		// Draw
 		BeginDrawing();
