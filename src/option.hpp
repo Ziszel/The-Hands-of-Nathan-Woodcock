@@ -1,6 +1,7 @@
 #include <raylib-cpp.hpp>
 #include <string>
 #include <cstring>
+#include <iostream>
 #pragma once
 
 // options will have:
@@ -17,7 +18,7 @@ private:
 
 public:
     int w = 100;
-    int h = 100;
+    int h = 50;
     bool selected = false;
 
 	Option(std::string content);

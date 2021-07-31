@@ -3,6 +3,7 @@
 #include <raylib-cpp.hpp>
 #include <string>
 #include <cstring>
+#include <iostream>
 #pragma once
 
 class Menu

@@ -17,16 +17,17 @@ void Menu::Update()
 
 void Menu::Draw(int screenWidth, int screenHeight)
 {
-    DrawText(titleText, titlePos.x, titlePos.y, 24, WHITE);
+    DrawTexture(this->backgroundTex, 0, 0, WHITE);
+    DrawText(titleText, titlePos.x, titlePos.y, 24, BLACK);
     for (int i = 0; i <= options.size(); i++)
 		{
-			int posX = screenWidth * 0.5;
-			int posY = screenHeight + (options[i].w + padding) * i;
+			int posX = (screenWidth * 0.5) - (options[i].w * 0.5);
+			int posY = screenHeight * 0.5 - (options[i].h + padding) * i;
             if (options[i].selected == true)
             {
                 DrawRectangleLines(posX, posY, options[i].w, options[i].h, BLACK);
             }
-			DrawRectangle(posX, posY, options[i].w, options[i].h, GRAY);
+			DrawRectangle(posX, posY, options[i].w, options[i].h, BLUE);
             options[i].Draw(posX, posY);
 		}
 }
