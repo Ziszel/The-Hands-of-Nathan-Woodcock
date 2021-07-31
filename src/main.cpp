@@ -2,8 +2,11 @@
 #include "player.hpp"
 #include "Utility/calMath.hpp"
 #include "serialisation.hpp"
+#include "option.hpp"
+#include "menu.hpp"
 #include <raylib-cpp.hpp>
 #include <array>
+#include <vector>
 
 int main()
 {
@@ -23,6 +26,18 @@ int main()
 	Texture2D playerTex = LoadTexture("resources/player.png");
 	Texture2D midGroundTex = LoadTexture("resources/midground.png");
 	Texture2D backGroundTex = LoadTexture("resources/background.png");
+	Texture2D menuTex = LoadTexture("resources/windowsxpbg.png");
+
+	// Create test menu objects
+	int drawTest = 1;
+	Option cont = Option("continue");
+	Option settings = Option("settings");
+	Option exit = Option("exit");
+	std::vector<Option> pauseOptions;
+	pauseOptions.push_back(cont);
+	pauseOptions.push_back(settings);
+	pauseOptions.push_back(exit);
+	Menu pauseMenu = Menu(menuTex, raylib::Vector2(screenWidth, screenHeight), "PAUSE", pauseOptions);
 
 	// Create game objects
 	Scrollable midGround = Scrollable(midGroundTex, raylib::Vector2(0.0f, 0.0f), 1, 2.0f);
@@ -43,6 +58,12 @@ int main()
 	// Main game loop
 	while (!w.ShouldClose()) // Detect window close button or ESC key
 	{
+		if (drawTest == 1)
+		{
+			// do nothing
+		}
+		else {
+
 		// Update
 		deltaTime = GetFrameTime();
 
@@ -114,9 +135,17 @@ int main()
 			camera.target = (raylib::Vector2){player->position.x + 20 + player->maxSpeed, player->position.y + 20};
 		}
 
+		}
+
 		// Draw
 		BeginDrawing();
 		ClearBackground(LIGHTGRAY);
+
+		if (drawTest == 1)
+		{
+			pauseMenu.Draw(screenWidth, screenHeight);
+		}
+		else {
 
 		// everything drawn within this mode is relational to the camera and not the screen
 		BeginMode2D(camera);
@@ -141,6 +170,7 @@ int main()
 			int posY = 25;
 
 			DrawRectangle(posX, posY, healthRecWidth, healthRecHeight, RED);
+		}
 		}
 		EndDrawing();
 	}
