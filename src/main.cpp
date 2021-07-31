@@ -54,7 +54,7 @@ int main()
 		{
 			player->speed.x += player->acceleration * deltaTime;
 		}
-		else if (player-> inAir == false)
+		else if (player->inAir == false)
 		{
 			player->speed.x *= player->friction;
 		}
@@ -81,11 +81,19 @@ int main()
 			player->position.y = 240;
 		}
 
+		if (IsKeyPressed('J'))
+		{
+			if (player->health > 0)
+			{
+				player->health--;
+			}
+		}
+
 		if (IsKeyPressed('S'))
 		{
 			SaveGameState(*player, scrollables);
 		}
-		else if(IsKeyPressed('L'))
+		else if (IsKeyPressed('L'))
 		{
 			LoadGameState(*player, scrollables);
 		}
@@ -99,29 +107,41 @@ int main()
 		// update the camera
 		if (player->speed.x != player->maxSpeed || player->speed.x != -player->maxSpeed)
 		{
-			camera.target = (raylib::Vector2){ player->position.x + 20 + player->speed.x * 7, player->position.y + 20};
+			camera.target = (raylib::Vector2){player->position.x + 20 + player->speed.x * 7, player->position.y + 20};
 		}
-		else {
-			camera.target = (raylib::Vector2){ player->position.x + 20 + player->maxSpeed, player->position.y + 20};
+		else
+		{
+			camera.target = (raylib::Vector2){player->position.x + 20 + player->maxSpeed, player->position.y + 20};
 		}
-		
 
 		// Draw
 		BeginDrawing();
-			ClearBackground(LIGHTGRAY);
+		ClearBackground(LIGHTGRAY);
 
-			BeginMode2D(camera);
+		// everything drawn within this mode is relational to the camera and not the screen
+		BeginMode2D(camera);
 
-				// Draw background layers
-				for (auto &s : scrollables)
-				{
-					DrawTextureEx(s.texture, s.position, 0.0f, 2.0f, WHITE);
-				}
+		// Draw background layers
+		for (auto &s : scrollables)
+		{
+			DrawTextureEx(s.texture, s.position, 0.0f, 2.0f, WHITE);
+		}
 
-				// Draw Player
-				DrawTextureEx(player->texture, player->position, 0.0f, 2.0f, WHITE);
+		// Draw Player
+		DrawTextureEx(player->texture, player->position, 0.0f, 2.0f, WHITE);
 
-			EndMode2D();
+		EndMode2D();
+		// Draw UI (for now just player health)
+		int healthRecWidth = 25;
+		int healthRecHeight = 25;
+		int padding = 10;
+		for (int i = player->health; i >= 0; i--)
+		{
+			int posX = screenWidth - (healthRecWidth + padding) * i;
+			int posY = 25;
+
+			DrawRectangle(posX, posY, healthRecWidth, healthRecHeight, RED);
+		}
 		EndDrawing();
 	}
 
