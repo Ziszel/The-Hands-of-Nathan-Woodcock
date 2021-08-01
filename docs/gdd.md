@@ -1,6 +1,15 @@
 # The Hands of Nathan Woodcock
 
-Created by Calin Clement Dermott
+### Created by Calin Clement Dermott
+
+## Content
+
+- [Game Description](#game-description)
+- [Plot Synopsis](#plot-synopsis)
+- [Plot Summary](#plot-summary)
+- [Levels](#levels)
+- [Inspiration](#inspiration)
+- [Game Loop](#game-loop)
 
 ## Game Description
 
@@ -18,7 +27,7 @@ to decide the next hardknock.
 
 Pissed, Woodcock sets out to put these students in line, and prove once more that he is 'the toughest of 'em all'.
 
-## Plot summary
+## Plot Summary
 
 Months before the start of the game, Nathan Woodcock has become known as 'The Toughest of 'em All'. Using this title
 he has managed to create peace amongst the schools and stop bullying from taking place; however, that all changes when his
