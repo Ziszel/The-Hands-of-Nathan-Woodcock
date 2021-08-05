@@ -2,8 +2,11 @@
 #include "player.hpp"
 #include "Utility/calMath.hpp"
 #include "serialisation.hpp"
+#include "option.hpp"
+#include "menu.hpp"
 #include <raylib-cpp.hpp>
 #include <array>
+#include <vector>
 
 int main()
 {
@@ -23,6 +26,18 @@ int main()
 	Texture2D playerTex = LoadTexture("resources/player.png");
 	Texture2D midGroundTex = LoadTexture("resources/midground.png");
 	Texture2D backGroundTex = LoadTexture("resources/background.png");
+	Texture2D menuTex = LoadTexture("resources/windowsxpbg.png");
+
+	// Create test menu objects
+	int drawTest = 0;
+	Option cont = Option("continue");
+	Option settings = Option("settings");
+	Option exit = Option("exit");
+	std::vector<Option> pauseOptions;
+	pauseOptions.push_back(exit);
+	pauseOptions.push_back(settings);
+	pauseOptions.push_back(cont);
+	Menu pauseMenu = Menu(menuTex, raylib::Vector2((float)screenWidth * 0.5 - 30, 25), "PAUSE", pauseOptions);
 
 	// Create game objects
 	Scrollable midGround = Scrollable(midGroundTex, raylib::Vector2(0.0f, 0.0f), 1, 2.0f);
@@ -43,104 +58,119 @@ int main()
 	// Main game loop
 	while (!w.ShouldClose()) // Detect window close button or ESC key
 	{
-		// Update
-		deltaTime = GetFrameTime();
-
-		if (IsKeyDown('A') && player->speed.x > -player->maxSpeed)
+		if (drawTest == 1)
 		{
-			player->speed.x += -player->acceleration * deltaTime;
-		}
-		else if (IsKeyDown('D') && player->speed.x < player->maxSpeed)
-		{
-			player->speed.x += player->acceleration * deltaTime;
-		}
-		else if (player->inAir == false)
-		{
-			player->speed.x *= player->friction;
-		}
-
-		if (IsKeyPressed('W') && player->inAir == false)
-		{
-			// move player up.
-			player->speed.y -= 500.0f * deltaTime;
-			// We are now in the air
-			player->inAir = true;
-		}
-		if (player->position.y < player->groundHeight && player->inAir == true)
-		{
-			// player must now be in the air, stop them jumping again,
-			// and slowly bring them down.
-			player->speed.y += player->gravity * deltaTime;
-		}
-		// this controls if the player is on the floor, replace with tiled
-		// logic once implemented
-		if (player->position.y > 240)
-		{
-			player->inAir = false;
-			player->speed.y = 0;
-			player->position.y = 240;
-		}
-
-		if (IsKeyPressed('J'))
-		{
-			if (player->health > 0)
-			{
-				player->health--;
-			}
-		}
-
-		if (IsKeyPressed('S'))
-		{
-			SaveGameState(*player, scrollables);
-		}
-		else if (IsKeyPressed('L'))
-		{
-			LoadGameState(*player, scrollables);
-		}
-
-		std::cout << player->position.y << std::endl;
-		std::cout << player->inAir << std::endl;
-		player->position.x += player->speed.x;
-		player->position.y += player->speed.y;
-		updateScrollables(scrollables, *player);
-
-		// update the camera
-		if (player->speed.x != player->maxSpeed || player->speed.x != -player->maxSpeed)
-		{
-			camera.target = (raylib::Vector2){player->position.x + 20 + player->speed.x * 7, player->position.y + 20};
 		}
 		else
 		{
-			camera.target = (raylib::Vector2){player->position.x + 20 + player->maxSpeed, player->position.y + 20};
+
+			// Update
+			deltaTime = GetFrameTime();
+
+			if (IsKeyDown('A') && player->speed.x > -player->maxSpeed)
+			{
+				player->speed.x += -player->acceleration * deltaTime;
+			}
+			else if (IsKeyDown('D') && player->speed.x < player->maxSpeed)
+			{
+				player->speed.x += player->acceleration * deltaTime;
+			}
+			else if (player->inAir == false)
+			{
+				player->speed.x *= player->friction;
+			}
+
+			if (IsKeyPressed('W') && player->inAir == false)
+			{
+				// move player up.
+				player->speed.y -= 500.0f * deltaTime;
+				// We are now in the air
+				player->inAir = true;
+			}
+			if (player->position.y < player->groundHeight && player->inAir == true)
+			{
+				// player must now be in the air, stop them jumping again,
+				// and slowly bring them down.
+				player->speed.y += player->gravity * deltaTime;
+			}
+			// this controls if the player is on the floor, replace with tiled
+			// logic once implemented
+			if (player->position.y > 240)
+			{
+				player->inAir = false;
+				player->speed.y = 0;
+				player->position.y = 240;
+			}
+
+			if (IsKeyPressed('J'))
+			{
+				if (player->health > 0)
+				{
+					player->health--;
+				}
+			}
+
+			if (IsKeyPressed('S'))
+			{
+				SaveGameState(*player, scrollables);
+			}
+			else if (IsKeyPressed('L'))
+			{
+				LoadGameState(*player, scrollables);
+			}
+
+			std::cout << player->position.y << std::endl;
+			std::cout << player->inAir << std::endl;
+			player->position.x += player->speed.x;
+			player->position.y += player->speed.y;
+			updateScrollables(scrollables, *player);
+
+			// update the camera
+			if (player->speed.x != player->maxSpeed || player->speed.x != -player->maxSpeed)
+			{
+				camera.target = (raylib::Vector2){player->position.x + 20 + player->speed.x * 7, player->position.y + 20};
+			}
+			else
+			{
+				camera.target = (raylib::Vector2){player->position.x + 20 + player->maxSpeed, player->position.y + 20};
+			}
 		}
 
 		// Draw
 		BeginDrawing();
 		ClearBackground(LIGHTGRAY);
 
-		// everything drawn within this mode is relational to the camera and not the screen
-		BeginMode2D(camera);
-
-		// Draw background layers
-		for (auto &s : scrollables)
+		if (drawTest == 1)
 		{
-			DrawTextureEx(s.texture, s.position, 0.0f, 2.0f, WHITE);
+			pauseMenu.Draw(screenWidth, screenHeight);
 		}
-
-		// Draw Player
-		DrawTextureEx(player->texture, player->position, 0.0f, 2.0f, WHITE);
-
-		EndMode2D();
-		// Draw UI (for now just player health)
-		int healthRecWidth = 25;
-		int healthRecHeight = 25;
-		int padding = 10;
-		for (int i = player->health; i >= 0; i--)
+		else
 		{
-			int posX = screenWidth - (healthRecWidth + padding) * i;
-			int posY = 25;
 
-			DrawRectangle(posX, posY, healthRecWidth, healthRecHeight, RED);
+			// everything drawn within this mode is relational to the camera and not the screen
+			BeginMode2D(camera);
+
+			// Draw background layers
+			for (auto &s : scrollables)
+			{
+				DrawTextureEx(s.texture, s.position, 0.0f, 2.0f, WHITE);
+			}
+
+			// Draw Player
+			DrawTextureEx(player->texture, player->position, 0.0f, 2.0f, WHITE);
+
+			EndMode2D();
+			// Draw UI (for now just player health)
+			int healthRecWidth = 25;
+			int healthRecHeight = 25;
+			int padding = 10;
+			for (int i = player->health; i >= 0; i--)
+			{
+				int posX = screenWidth - (healthRecWidth + padding) * i;
+				int posY = 25;
+
+				DrawRectangle(posX, posY, healthRecWidth, healthRecHeight, RED);
+			}
 		}
 		EndDrawing();
 	}
