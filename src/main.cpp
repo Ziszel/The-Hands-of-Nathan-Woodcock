@@ -29,7 +29,7 @@ int main()
 	Texture2D menuTex = LoadTexture("resources/windowsxpbg.png");
 
 	// Create test menu objects
-	int drawTest = 1;
+	int drawTest = 0;
 	Option cont = Option("continue");
 	Option settings = Option("settings");
 	Option exit = Option("exit");
