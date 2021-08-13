@@ -23,11 +23,22 @@ void Player::Update(float deltaTime)
 {
     if (IsKeyDown('A') && this->speed.x > -this->maxSpeed)
     {
-        this->speed.x += -this->acceleration * deltaTime;
+        if (this->inAir == false) {
+            this->speed.x += (-this->acceleration) * deltaTime;
+        }
+        else {
+            this->speed.x += (-this->acceleration * 0.5) * deltaTime;
+        }
+        
     }
     else if (IsKeyDown('D') && this->speed.x < this->maxSpeed)
     {
-        this->speed.x += this->acceleration * deltaTime;
+        if (this->inAir == false) {
+            this->speed.x += (this->acceleration) * deltaTime;
+        }
+        else {
+            this->speed.x += (this->acceleration * 0.5) * deltaTime;
+        }
     }
     else if (this->inAir == false)
     {

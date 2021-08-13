@@ -54,7 +54,7 @@ int main()
 	camera.rotation = 0.0f;
 	camera.zoom = 1.0f;
 
-	SetWindowPosition(800, 800);
+	SetWindowPosition(600, 400);
 	// Main game loop
 	while (!w.ShouldClose()) // Detect window close button or ESC key
 	{
