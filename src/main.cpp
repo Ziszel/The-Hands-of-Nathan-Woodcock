@@ -4,6 +4,7 @@
 #include "serialisation.hpp"
 #include "option.hpp"
 #include "menu.hpp"
+#include "ui.hpp"
 #include <raylib-cpp.hpp>
 #include <array>
 #include <vector>
@@ -44,6 +45,7 @@ int main()
 
 	Scrollable backGround = Scrollable(backGroundTex, raylib::Vector2(0.0f, 0.0f), 0, 8.0f);
 	Player *player = new Player(playerTex, raylib::Vector2(screenWidth / 2, screenHeight / 2));
+	UI ui = UI();
 
 	std::array<Scrollable, 2> scrollables = {backGround, midGround};
 
@@ -115,16 +117,8 @@ int main()
 
 			EndMode2D();
 			// Draw UI (for now just player health)
-			int healthRecWidth = 25;
-			int healthRecHeight = 25;
-			int padding = 10;
-			for (int i = player->health; i >= 0; i--)
-			{
-				int posX = screenWidth - (healthRecWidth + padding) * i;
-				int posY = 25;
-
-				DrawRectangle(posX, posY, healthRecWidth, healthRecHeight, RED);
-			}
+			ui.Draw(player, screenWidth);
+			
 		}
 		EndDrawing();
 	}
