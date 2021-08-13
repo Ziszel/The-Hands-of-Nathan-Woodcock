@@ -67,49 +67,6 @@ int main()
 			// Update
 			deltaTime = GetFrameTime();
 
-			if (IsKeyDown('A') && player->speed.x > -player->maxSpeed)
-			{
-				player->speed.x += -player->acceleration * deltaTime;
-			}
-			else if (IsKeyDown('D') && player->speed.x < player->maxSpeed)
-			{
-				player->speed.x += player->acceleration * deltaTime;
-			}
-			else if (player->inAir == false)
-			{
-				player->speed.x *= player->friction;
-			}
-
-			if (IsKeyPressed('W') && player->inAir == false)
-			{
-				// move player up.
-				player->speed.y -= 500.0f * deltaTime;
-				// We are now in the air
-				player->inAir = true;
-			}
-			if (player->position.y < player->groundHeight && player->inAir == true)
-			{
-				// player must now be in the air, stop them jumping again,
-				// and slowly bring them down.
-				player->speed.y += player->gravity * deltaTime;
-			}
-			// this controls if the player is on the floor, replace with tiled
-			// logic once implemented
-			if (player->position.y > 240)
-			{
-				player->inAir = false;
-				player->speed.y = 0;
-				player->position.y = 240;
-			}
-
-			if (IsKeyPressed('J'))
-			{
-				if (player->health > 0)
-				{
-					player->health--;
-				}
-			}
-
 			if (IsKeyPressed('S'))
 			{
 				SaveGameState(*player, scrollables);
@@ -119,10 +76,7 @@ int main()
 				LoadGameState(*player, scrollables);
 			}
 
-			std::cout << player->position.y << std::endl;
-			std::cout << player->inAir << std::endl;
-			player->position.x += player->speed.x;
-			player->position.y += player->speed.y;
+			player->Update(deltaTime);
 			updateScrollables(scrollables, *player);
 
 			// update the camera
@@ -157,7 +111,7 @@ int main()
 			}
 
 			// Draw Player
-			DrawTextureEx(player->texture, player->position, 0.0f, 2.0f, WHITE);
+			player->Draw();
 
 			EndMode2D();
 			// Draw UI (for now just player health)

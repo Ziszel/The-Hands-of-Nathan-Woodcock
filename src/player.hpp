@@ -21,6 +21,9 @@ public:
 
 	Player(Texture2D texture, raylib::Vector2 position);
 	Player() = default;
+
+	void Update(float deltaTime);
+	void Draw();
 };
 
 //void to_json(nlohmann::json &j, const Player &p);
