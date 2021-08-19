@@ -61,7 +61,7 @@ The choir-maiden arrives just in-time to patch Woodcock's wound as they look out
 - The Academy:
 	- Used to be a comprehensive (like Woodcock's school)
 	- Just as terrible as Woodcock's school but the students act all high and mighty
-	- Boss is an unpopular delinquent known as: X
+	- Boss is an unpopular delinquent known as: Hardman Carlin
 - The Choir School:
 	- A catholic priory turned into educational establishment
 	- A friendly NPC (a choirmaiden) who offers support is introduced here
