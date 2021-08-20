@@ -15,6 +15,8 @@ public:
 	const float acceleration = 8.0f;
 	const float friction = 0.92f;
 	const int groundHeight = 240;
+	float width;
+	float height;
 	int health = 3;
 	const float gravity = 10.0f;
 	bool inAir;

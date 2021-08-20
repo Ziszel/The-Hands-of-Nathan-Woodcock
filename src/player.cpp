@@ -17,6 +17,8 @@ Player::Player(Texture2D texture, raylib::Vector2 position)
     this->position = position;
     this->speed = raylib::Vector2(0.0f, 0.0f);
     this->inAir = false;
+    this->height = texture.height * 0.5;
+    this->width = texture.width * 0.5;
 }
 
 void Player::Update(float deltaTime)
@@ -30,8 +32,7 @@ void Player::Update(float deltaTime)
             }
             else { this->speed.x += (-this->acceleration) * deltaTime; }
         }
-        else { this->speed.x += (-this->acceleration * 0.5) * deltaTime; }
-        
+        else { this->speed.x += (-this->acceleration * 0.5) * deltaTime; }    
     }
     else if (IsKeyDown('D') && this->speed.x < this->maxSpeed)
     {
@@ -43,6 +44,11 @@ void Player::Update(float deltaTime)
             else { this->speed.x += (this->acceleration) * deltaTime; }
         }
         else { this->speed.x += (this->acceleration * 0.5) * deltaTime; }
+    }
+    // Not sure why this fixes the camera issue
+    else if (IsKeyDown('A') || IsKeyDown('D') && this->speed.x == this->speed.x)
+    {
+        this->speed.x = this->speed.x;
     }
     else if (this->inAir == false)
     {

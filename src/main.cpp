@@ -82,14 +82,15 @@ int main()
 			updateScrollables(scrollables, *player);
 
 			// update the camera
-			if (player->speed.x != player->maxSpeed || player->speed.x != -player->maxSpeed)
-			{
-				camera.target = (raylib::Vector2){player->position.x + 20 + player->speed.x * 7, player->position.y + 20};
-			}
-			else
-			{
-				camera.target = (raylib::Vector2){player->position.x + 20 + player->maxSpeed, player->position.y + 20};
-			}
+			camera.target = (raylib::Vector2){player->position.x + player->width + player->speed.x * 7, player->position.y + player->height};
+			// if (player->speed.x != player->maxSpeed || player->speed.x != -player->maxSpeed)
+			// {
+			// 	camera.target = (raylib::Vector2){player->position.x + 20 + player->speed.x * 7, player->position.y + 20};
+			// }
+			// else
+			// {
+			// 	camera.target = (raylib::Vector2){player->position.x + 20 + player->maxSpeed, player->position.y + 20};
+			// }
 		}
 
 		// Draw
