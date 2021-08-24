@@ -1,5 +1,6 @@
 #include <raylib-cpp.hpp>
 #include <nlohmann/json.hpp>
+#include <iostream>
 #pragma once
 
 // "namespaces exist to avoid identical name conflicts.
@@ -26,7 +27,8 @@ public:
 
 	void Update(float deltaTime);
 	void xMovement(float deltaTime);
-	void yMovement(float deltaTime);
+	void yMovement(float deltaTime, int key);
+	float setModifier(float deltaTime);
 	void Draw();
 };
 

@@ -23,14 +23,13 @@ Player::Player(Texture2D texture, raylib::Vector2 position)
 
 void Player::Update(float deltaTime)
 {
-    // Checks if player has moved left or right on the x axis
-    // and applies 'physics' to give feel
+    // Checks if player has input a key and moves if required
+    int key = GetKeyPressed();
+    
     xMovement(deltaTime);
+    yMovement(deltaTime, key);
 
-    // Checks if the player has jumped and applies 'physics' to give feel
-    yMovement(deltaTime);
-
-    // this controls if the player is on the floor, replace with tiled
+    // this controls whether or not the player can jump, replace with tiled
     // logic once implemented
     if (this->position.y > 240)
     {
@@ -51,6 +50,14 @@ void Player::Update(float deltaTime)
     // move the player relative to their speed
     this->position.x += this->speed.x;
     this->position.y += this->speed.y;
+
+    // apply gravity if the player is in the air
+    if (this->position.y < this->groundHeight && this->inAir == true)
+    {
+        // player must now be in the air, stop them jumping again,
+        // and slowly bring them down.
+        this->speed.y += this->gravity * deltaTime;
+    }
 }
 
 void Player::Draw()
@@ -60,66 +67,131 @@ void Player::Draw()
 
 void Player::xMovement(float deltaTime)
 {
-    if (IsKeyDown('A') && this->speed.x > -this->maxSpeed)
+    // everytime I press a key it says it's not 'a' or 'd'
+    // if (!IsKeyDown && this->inAir == false)
+    // {
+    //     std::cout << "boi" << "\n";
+    //     this->speed.x *= this->friction;
+    //     //return;
+    // }
+
+    float modifier = setModifier(deltaTime);
+
+    if (modifier == this->friction)
     {
-        if (this->inAir == false)
-        {
-            if (this->speed.x > 2)
-            {
-                this->speed.x *= this->friction;
-            }
-            else
-            {
-                this->speed.x += (-this->acceleration) * deltaTime;
-            }
-        }
-        else
-        {
-            this->speed.x += (-this->acceleration * 0.5) * deltaTime;
-        }
+        this->speed *= modifier;
     }
-    else if (IsKeyDown('D') && this->speed.x < this->maxSpeed)
+    else
     {
-        if (this->inAir == false)
-        {
-            if (this->speed.x < -2)
-            {
-                this->speed.x *= this->friction;
-            }
-            else
-            {
-                this->speed.x += (this->acceleration) * deltaTime;
-            }
-        }
-        else
-        {
-            this->speed.x += (this->acceleration * 0.5) * deltaTime;
-        }
+        this->speed += modifier;
     }
-    // Not sure why this fixes the camera issue
-    else if (IsKeyDown('A') || IsKeyDown('D') && this->speed.x == this->speed.x)
+    
+    // else if (modifier < 0 && this->speed.x < -2)
+    // {
+    //     this->speed.x *= this->friction;
+    // }
+    // else 
+    // {
+    //     this->speed.x += modifier;
+    // }
+
+    // if (IsKeyDown('A') && this->speed.x > -this->maxSpeed)
+    // {
+    //     if (this->inAir == false)
+    //     {
+    //         if (this->speed.x > 2)
+    //         {
+    //             this->speed.x *= this->friction;
+    //         }
+    //         else
+    //         {
+    //             this->speed.x += (-this->acceleration) * deltaTime;
+    //         }
+    //     }
+    //     else
+    //     {
+    //         this->speed.x += (-this->acceleration * 0.5) * deltaTime;
+    //     }
+    // }
+    // else if (IsKeyDown('D') && this->speed.x < this->maxSpeed)
+    // {
+    //     if (this->inAir == false)
+    //     {
+    //         if (this->speed.x < -2)
+    //         {
+    //             this->speed.x *= this->friction;
+    //         }
+    //         else
+    //         {
+    //             this->speed.x += (this->acceleration) * deltaTime;
+    //         }
+    //     }
+    //     else
+    //     {
+    //         this->speed.x += (this->acceleration * 0.5) * deltaTime;
+    //     }
+    // }
+
+    // //this->speed.x = this->speed.x;
+    // // Not sure why this fixes the camera issue
+    // // else if (IsKeyDown('A') || IsKeyDown('D') && this->speed.x == this->speed.x)
+    // // {
+    // //     this->speed.x = this->speed.x;
+    // // }
+    // else if (IsKeyDown('A') || IsKeyDown('D') == false && this->inAir == false)
+    // {
+    //
+    // }
+}
+
+void Player::yMovement(float deltaTime, int key)
+{
+    if (key == 'w' && this->inAir == false)
     {
-        this->speed.x = this->speed.x;
-    }
-    else if (this->inAir == false)
-    {
-        this->speed.x *= this->friction;
+        this->speed.y -= 500.0f * deltaTime;
+        this->inAir = true;
     }
 }
 
-void Player::yMovement(float deltaTime)
+float Player::setModifier(float deltaTime)
 {
-    if (IsKeyPressed('W') && this->inAir == false)
+
+    if (IsKeyDown('A') && this->speed.x > -this->maxSpeed)
     {
-        // move player up.
-        this->speed.y -= 500.0f * deltaTime;
-        // We are now in the air
-        this->inAir = true;
+        // moves the player slower in the air
+        if (this->inAir == true)
+        {
+            return (-this->acceleration * 0.5) * deltaTime;
+        }
+        // allows player to quickly change direction
+        else if (this->speed.x > 2)
+        {
+            return this->friction;
+        }
+        // moves the player at standard speed
+        else
+        {
+            return (-this->acceleration) * deltaTime;
+        }
     }
-    if (this->position.y < this->groundHeight && this->inAir == true)
+    if (IsKeyDown('D') && this->speed.x < this->maxSpeed)
     {
-        // player must now be in the air, stop them jumping again,
-        // and slowly bring them down.
-        this->speed.y += this->gravity * deltaTime;
+        if (this->inAir == true)
+        {
+            return (this->acceleration * 0.5) * deltaTime;
+        }
+        else if (this->speed.x < -2)
+        {
+            return this->friction;
+        }
+        else
+        {
+            return (this->acceleration) * deltaTime;
+        }
     }
+    if (this->inAir == false)
+    {
+        return this->friction;
+    }
+    return 0.0f;
 }
