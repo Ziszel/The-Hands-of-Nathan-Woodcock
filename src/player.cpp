@@ -25,7 +25,7 @@ void Player::Update(float deltaTime)
 {
     // Checks if player has input a key and moves if required
     int key = GetKeyPressed();
-    
+
     xMovement(deltaTime);
     yMovement(deltaTime, key);
 
@@ -79,18 +79,21 @@ void Player::xMovement(float deltaTime)
 
     if (modifier == this->friction)
     {
-        this->speed *= modifier;
+        this->speed.x *= modifier;
     }
     else
     {
-        this->speed += modifier;
+        if ((this->speed.x + modifier) < this->maxSpeed && (this->speed.x + modifier) > -this->maxSpeed)
+        {
+            this->speed.x += modifier;
+        }
     }
-    
+
     // else if (modifier < 0 && this->speed.x < -2)
     // {
     //     this->speed.x *= this->friction;
     // }
-    // else 
+    // else
     // {
     //     this->speed.x += modifier;
     // }
@@ -132,16 +135,13 @@ void Player::xMovement(float deltaTime)
     //     }
     // }
 
-    // //this->speed.x = this->speed.x;
+    // // this->speed.x = this->speed.x;
     // // Not sure why this fixes the camera issue
-    // // else if (IsKeyDown('A') || IsKeyDown('D') && this->speed.x == this->speed.x)
-    // // {
-    // //     this->speed.x = this->speed.x;
-    // // }
-    // else if (IsKeyDown('A') || IsKeyDown('D') == false && this->inAir == false)
+    // else if (IsKeyDown('A') || IsKeyDown('D') && this->speed.x == this->speed.x)
     // {
-    //
+    //     this->speed.x = this->speed.x;
     // }
+
 }
 
 void Player::yMovement(float deltaTime, int key)
