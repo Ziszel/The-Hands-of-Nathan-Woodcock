@@ -25,6 +25,8 @@ public:
 	Player() = default;
 
 	void Update(float deltaTime);
+	void xMovement(float deltaTime);
+	void yMovement(float deltaTime);
 	void Draw();
 };
 
