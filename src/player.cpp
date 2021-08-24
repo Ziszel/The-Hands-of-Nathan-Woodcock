@@ -67,13 +67,8 @@ void Player::Draw()
 
 void Player::xMovement(float deltaTime)
 {
-    // everytime I press a key it says it's not 'a' or 'd'
-    // if (!IsKeyDown && this->inAir == false)
-    // {
-    //     std::cout << "boi" << "\n";
-    //     this->speed.x *= this->friction;
-    //     //return;
-    // }
+    // TODO: Check if there is no input
+    // If not then break out of loop here as a small optimisation
 
     float modifier = setModifier(deltaTime);
 
@@ -88,59 +83,6 @@ void Player::xMovement(float deltaTime)
             this->speed.x += modifier;
         }
     }
-
-    // else if (modifier < 0 && this->speed.x < -2)
-    // {
-    //     this->speed.x *= this->friction;
-    // }
-    // else
-    // {
-    //     this->speed.x += modifier;
-    // }
-
-    // if (IsKeyDown('A') && this->speed.x > -this->maxSpeed)
-    // {
-    //     if (this->inAir == false)
-    //     {
-    //         if (this->speed.x > 2)
-    //         {
-    //             this->speed.x *= this->friction;
-    //         }
-    //         else
-    //         {
-    //             this->speed.x += (-this->acceleration) * deltaTime;
-    //         }
-    //     }
-    //     else
-    //     {
-    //         this->speed.x += (-this->acceleration * 0.5) * deltaTime;
-    //     }
-    // }
-    // else if (IsKeyDown('D') && this->speed.x < this->maxSpeed)
-    // {
-    //     if (this->inAir == false)
-    //     {
-    //         if (this->speed.x < -2)
-    //         {
-    //             this->speed.x *= this->friction;
-    //         }
-    //         else
-    //         {
-    //             this->speed.x += (this->acceleration) * deltaTime;
-    //         }
-    //     }
-    //     else
-    //     {
-    //         this->speed.x += (this->acceleration * 0.5) * deltaTime;
-    //     }
-    // }
-
-    // // this->speed.x = this->speed.x;
-    // // Not sure why this fixes the camera issue
-    // else if (IsKeyDown('A') || IsKeyDown('D') && this->speed.x == this->speed.x)
-    // {
-    //     this->speed.x = this->speed.x;
-    // }
 
 }
 
