@@ -98,6 +98,7 @@ void Player::yMovement(float deltaTime, int key)
 float Player::setModifier(float deltaTime)
 {
 
+    // TODO: Split out the friction and inAir calculations into separate functions
     if (IsKeyDown('A') && this->speed.x > -this->maxSpeed)
     {
         // moves the player slower in the air
