@@ -88,7 +88,7 @@ void Player::xMovement(float deltaTime)
 
 void Player::yMovement(float deltaTime, int key)
 {
-    if (key == 'w' && this->inAir == false)
+    if (IsKeyPressed('W') && this->inAir == false)
     {
         this->speed.y -= 500.0f * deltaTime;
         this->inAir = true;
