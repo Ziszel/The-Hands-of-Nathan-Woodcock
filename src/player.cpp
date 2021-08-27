@@ -47,10 +47,6 @@ void Player::Update(float deltaTime)
         }
     }
 
-    // move the player relative to their speed
-    this->position.x += this->speed.x;
-    this->position.y += this->speed.y;
-
     // apply gravity if the player is in the air
     if (this->position.y < this->groundHeight && this->inAir == true)
     {
@@ -58,6 +54,10 @@ void Player::Update(float deltaTime)
         // and slowly bring them down.
         this->speed.y += this->gravity * deltaTime;
     }
+
+    // move the player relative to their speed
+    this->position.x += this->speed.x;
+    this->position.y += this->speed.y;
 }
 
 void Player::Draw()
