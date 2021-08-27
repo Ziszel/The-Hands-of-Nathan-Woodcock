@@ -1,5 +1,6 @@
 #include <raylib-cpp.hpp>
 #include <nlohmann/json.hpp>
+#include <iostream>
 #pragma once
 
 // "namespaces exist to avoid identical name conflicts.
@@ -15,6 +16,8 @@ public:
 	const float acceleration = 8.0f;
 	const float friction = 0.92f;
 	const int groundHeight = 240;
+	float width;
+	float height;
 	int health = 3;
 	const float gravity = 10.0f;
 	bool inAir;
@@ -23,6 +26,9 @@ public:
 	Player() = default;
 
 	void Update(float deltaTime);
+	void xMovement(float deltaTime);
+	void yMovement(float deltaTime, int key);
+	float setModifier(float deltaTime);
 	void Draw();
 };
 
