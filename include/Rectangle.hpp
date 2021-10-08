@@ -1,27 +1,3 @@
-/*
-*   LICENSE: zlib/libpng
-*
-*   raylib-cpp is licensed under an unmodified zlib/libpng license, which is an OSI-certified,
-*   BSD-like license that allows static linking with closed source software:
-*
-*   Copyright (c) 2020 Rob Loach (@RobLoach)
-*
-*   This software is provided "as-is", without any express or implied warranty. In no event
-*   will the authors be held liable for any damages arising from the use of this software.
-*
-*   Permission is granted to anyone to use this software for any purpose, including commercial
-*   applications, and to alter it and redistribute it freely, subject to the following restrictions:
-*
-*     1. The origin of this software must not be misrepresented; you must not claim that you
-*     wrote the original software. If you use this software in a product, an acknowledgment
-*     in the product documentation would be appreciated but is not required.
-*
-*     2. Altered source versions must be plainly marked as such, and must not be misrepresented
-*     as being the original software.
-*
-*     3. This notice may not be removed or altered from any source distribution.
-*/
-
 #ifndef RAYLIB_CPP_INCLUDE_RECTANGLE_HPP_
 #define RAYLIB_CPP_INCLUDE_RECTANGLE_HPP_
 
@@ -30,18 +6,25 @@
 #include "./Vector2.hpp"
 
 namespace raylib {
+/**
+ * Rectangle type
+ */
 class Rectangle : public ::Rectangle {
  public:
-    Rectangle(::Rectangle vec) {
+    Rectangle(const ::Rectangle& vec) {
         set(vec);
     }
 
-    Rectangle(float X = 0, float Y = 0, float Width = 0, float Height = 0) {
-        x = X;
-        y = Y;
-        width = Width;
-        height = Height;
-    }
+    Rectangle(float x, float y, float width, float height) : ::Rectangle{x, y, width, height} {}
+    Rectangle(float x, float y, float width) : ::Rectangle{x, y, width, 0} {}
+    Rectangle(float x, float y) : ::Rectangle{x, y, 0, 0} {}
+    Rectangle(float x) : ::Rectangle{x, 0, 0, 0} {}
+    Rectangle() : ::Rectangle{0, 0, 0, 0} {}
+
+    Rectangle(::Vector2 position, ::Vector2 size)
+            : ::Rectangle{position.x, position.y, size.x, size.y} {}
+    Rectangle(::Vector2 size) : ::Rectangle{0, 0, size.x, size.y} {}
+    Rectangle(::Vector4 rect) : ::Rectangle{rect.x, rect.y, rect.z, rect.w} {}
 
     GETTERSETTER(float, X, x)
     GETTERSETTER(float, Y, y)
@@ -53,16 +36,23 @@ class Rectangle : public ::Rectangle {
         return *this;
     }
 
-    Rectangle& operator=(const Rectangle& rect) {
-        set(rect);
-        return *this;
+    inline ::Vector4 ToVector4() {
+        return {x, y, width, height};
     }
 
+    operator ::Vector4() const {
+        return {x, y, width, height};
+    }
+
+    /**
+     * Draw a color-filled rectangle
+     */
     inline Rectangle& Draw(::Color color) {
         ::DrawRectangle(static_cast<int>(x), static_cast<int>(y), static_cast<int>(width),
             static_cast<int>(height), color);
         return *this;
     }
+
     inline Rectangle& Draw(::Vector2 origin, float rotation, ::Color color) {
         ::DrawRectanglePro(*this, origin, rotation, color);
         return *this;
@@ -90,7 +80,8 @@ class Rectangle : public ::Rectangle {
             static_cast<int>(height), color);
         return *this;
     }
-    inline Rectangle& DrawLinesEx(int lineThick, ::Color color) {
+
+    inline Rectangle& DrawLines(::Color color, int lineThick) {
         ::DrawRectangleLinesEx(*this, lineThick, color);
         return *this;
     }
@@ -106,20 +97,64 @@ class Rectangle : public ::Rectangle {
         return *this;
     }
 
+    /**
+     * Check collision between two rectangles
+     */
     inline bool CheckCollision(::Rectangle rec2) const {
         return ::CheckCollisionRecs(*this, rec2);
     }
 
-    inline Rectangle GetCollision(::Rectangle rec2) const {
+    /**
+     * Get collision rectangle for two rectangles collision
+     */
+    inline ::Rectangle GetCollision(::Rectangle rec2) const {
         return ::GetCollisionRec(*this, rec2);
     }
 
+    /**
+     * Check if point is inside rectangle
+     */
     inline bool CheckCollision(::Vector2 point) const {
         return ::CheckCollisionPointRec(point, *this);
     }
 
- protected:
-    inline void set(::Rectangle rect) {
+    /**
+     * Check collision between circle and rectangle
+     */
+    inline bool CheckCollision(::Vector2 center, float radius) {
+        return ::CheckCollisionCircleRec(center, radius, *this);
+    }
+
+    inline ::Vector2 GetSize() {
+        return {width, height};
+    }
+
+    inline Rectangle& SetSize(float newWidth, float newHeight) {
+        width = newWidth;
+        height = newHeight;
+        return *this;
+    }
+
+    inline Rectangle& SetSize(const ::Vector2& size) {
+        return SetSize(size.x, size.y);
+    }
+
+    inline ::Vector2 GetPosition() {
+        return {x, y};
+    }
+
+    inline Rectangle& SetPosition(float newX, float newY) {
+        x = newX;
+        y = newY;
+        return *this;
+    }
+
+    inline Rectangle& SetPosition(const ::Vector2& position) {
+        return SetPosition(position.x, position.y);
+    }
+
+ private:
+    inline void set(const ::Rectangle& rect) {
         x = rect.x;
         y = rect.y;
         width = rect.width;

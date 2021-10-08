@@ -1,40 +1,25 @@
-/*
-*   LICENSE: zlib/libpng
-*
-*   raylib-cpp is licensed under an unmodified zlib/libpng license, which is an OSI-certified,
-*   BSD-like license that allows static linking with closed source software:
-*
-*   Copyright (c) 2020 Rob Loach (@RobLoach)
-*
-*   This software is provided "as-is", without any express or implied warranty. In no event
-*   will the authors be held liable for any damages arising from the use of this software.
-*
-*   Permission is granted to anyone to use this software for any purpose, including commercial
-*   applications, and to alter it and redistribute it freely, subject to the following restrictions:
-*
-*     1. The origin of this software must not be misrepresented; you must not claim that you
-*     wrote the original software. If you use this software in a product, an acknowledgment
-*     in the product documentation would be appreciated but is not required.
-*
-*     2. Altered source versions must be plainly marked as such, and must not be misrepresented
-*     as being the original software.
-*
-*     3. This notice may not be removed or altered from any source distribution.
-*/
-
 #ifndef RAYLIB_CPP_INCLUDE_MATERIAL_HPP_
 #define RAYLIB_CPP_INCLUDE_MATERIAL_HPP_
+
+#include <string>
+#include <vector>
 
 #include "./raylib.hpp"
 #include "./raylib-cpp-utils.hpp"
 
 namespace raylib {
+/**
+ * Material type (generic)
+ */
 class Material : public ::Material {
  public:
-    Material(::Material material) {
+    Material(const ::Material& material) {
         set(material);
     }
 
+    /**
+     * Load default material (Supports: DIFFUSE, SPECULAR, NORMAL maps)
+     */
     Material() {
         set(LoadMaterialDefault());
     }
@@ -43,32 +28,51 @@ class Material : public ::Material {
         Unload();
     }
 
+    /**
+     * Load materials from model file
+     */
+    static std::vector<Material> Load(const std::string& fileName) {
+        int count = 0;
+        ::Material* materials = ::LoadMaterials(fileName.c_str(), &count);
+        return std::vector<Material>(materials, materials + count);
+    }
+
     GETTERSETTER(::Shader, Shader, shader)
+    GETTERSETTER(::MaterialMap*, Maps, maps)
+    // TODO(RobLoach): Resolve the Material params being a float[4].
+    // GETTERSETTER(float[4], Params, params)
 
     Material& operator=(const ::Material& material) {
         set(material);
         return *this;
     }
 
-    Material& operator=(const Material& material) {
-        set(material);
-        return *this;
-    }
-
+    /**
+     * Unload material from memory
+     */
     inline void Unload() {
-        ::UnloadMaterial(*this);
+        if (maps != NULL) {
+            ::UnloadMaterial(*this);
+            maps = NULL;
+        }
     }
 
-    inline Material& SetTexture(int mapType, ::Texture2D texture) {
+    /**
+     * Set texture for a material map type (MAP_DIFFUSE, MAP_SPECULAR...)
+     */
+    inline Material& SetTexture(int mapType, const ::Texture2D& texture) {
         ::SetMaterialTexture(this, mapType, texture);
         return *this;
     }
 
- protected:
-    inline void set(::Material material) {
+ private:
+    inline void set(const ::Material& material) {
         shader = material.shader;
         maps = material.maps;
-        params = material.params;
+        params[0] = material.params[0];
+        params[1] = material.params[1];
+        params[2] = material.params[2];
+        params[3] = material.params[3];
     }
 };
 }  // namespace raylib

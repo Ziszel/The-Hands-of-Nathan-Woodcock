@@ -22,10 +22,8 @@ to prove for once and for all who the toughest of them all is.
 Sometime after becoming 'the toughest of 'em all', Nathan Woodcock enjoys a quiet school life with his girlfriend
 and nerdy buddy, Buddy.
 
-Soon that all changes when Buddy arrives beaten, with some terrible news: a new battle is raging between the schools
-to decide the next hardknock.
-
-Pissed, Woodcock sets out to put these students in line, and prove once more that he is 'the toughest of 'em all'.
+When Buddy arrives beaten, with the news that the schools are rising once more to find a new hardnoc, Woodcock sets out
+to put them in their place once more.
 
 ## Plot Summary
 
@@ -81,14 +79,15 @@ The choir-maiden arrives just in-time to patch Woodcock's wound as they look out
 
 ## Game Loop
 
-Each level consists of several screens that the player must traverse from left to right.
+Each level consists of three screens of increasing difficulty that the player must traverse from left to right.
+note: each screen should give the player a checkpoint, the same as a save state (keep health, etc... the same)
 
 Obstacles will include platforms, pit-traps and enemies that the player must overcome to proceed.
 
-The player can jump, fight with punches, and use power-ups to change their special move.
+The player can jump, fight with punches, and use a special move. Power-ups can be collected to change their special move.
 
 At the end of the screens, the player must fight and defeat a boss to proceed to the next level.
 
-Both before and after a level there will be static screen cutscenes with text to help put across the plot.
+Both before and after a level there will be static screen cutscenes with text to help get the plot across.
 
 

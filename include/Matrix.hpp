@@ -1,74 +1,29 @@
-/*
-*   LICENSE: zlib/libpng
-*
-*   raylib-cpp is licensed under an unmodified zlib/libpng license, which is an OSI-certified,
-*   BSD-like license that allows static linking with closed source software:
-*
-*   Copyright (c) 2020 Rob Loach (@RobLoach)
-*
-*   This software is provided "as-is", without any express or implied warranty. In no event
-*   will the authors be held liable for any damages arising from the use of this software.
-*
-*   Permission is granted to anyone to use this software for any purpose, including commercial
-*   applications, and to alter it and redistribute it freely, subject to the following restrictions:
-*
-*     1. The origin of this software must not be misrepresented; you must not claim that you
-*     wrote the original software. If you use this software in a product, an acknowledgment
-*     in the product documentation would be appreciated but is not required.
-*
-*     2. Altered source versions must be plainly marked as such, and must not be misrepresented
-*     as being the original software.
-*
-*     3. This notice may not be removed or altered from any source distribution.
-*/
-
 #ifndef RAYLIB_CPP_INCLUDE_MATRIX_HPP_
 #define RAYLIB_CPP_INCLUDE_MATRIX_HPP_
 
-#ifdef __cplusplus
-extern "C" {
-#endif
-#include "raylib.h" // NOLINT
-#ifndef RAYLIB_CPP_NO_MATH
-#include "raymath.h" // NOLINT
-#endif
-#ifdef __cplusplus
-}
-#endif
+#include "./raylib.hpp"
+#include "./raylib-cpp-utils.hpp"
+#include "./raymath.hpp"
 
 #ifndef RAYLIB_CPP_NO_MATH
 #include <cmath>
 #endif
 
-#include "./raylib-cpp-utils.hpp"
-
 namespace raylib {
+/**
+ * Matrix type (OpenGL style 4x4 - right handed, column major)
+ */
 class Matrix : public ::Matrix {
  public:
-    Matrix(::Matrix mat) {
+    Matrix(const ::Matrix& mat) {
         set(mat);
     }
 
-    Matrix(float M0 = 0, float M1 = 0, float M2 = 0, float M3 = 0, float M4 = 0, float M5 = 0,
-            float M6 = 0, float M7 = 0, float M8 = 0, float M9 = 0, float M10 = 0, float M11 = 0,
-            float M12 = 0, float M13 = 0, float M14 = 0, float M15 = 0) {
-        m0 = M0;
-        m1 = M1;
-        m2 = M2;
-        m3 = M3;
-        m4 = M4;
-        m5 = M5;
-        m6 = M6;
-        m7 = M7;
-        m8 = M8;
-        m9 = M9;
-        m10 = M10;
-        m11 = M11;
-        m12 = M12;
-        m13 = M13;
-        m14 = M14;
-        m15 = M15;
-    }
+    Matrix(
+            float m0 = 0, float m1 = 0, float m2 = 0, float m3 = 0, float m4 = 0, float m5 = 0,
+            float m6 = 0, float m7 = 0, float m8 = 0, float m9 = 0, float m10 = 0, float m11 = 0,
+            float m12 = 0, float m13 = 0, float m14 = 0, float m15 = 0
+        ) : ::Matrix{m0, m1, m2, m3, m4, m5, m6, m7, m8, m9, m10, m11, m12, m13, m14, m15} {}
 
     GETTERSETTER(float, M0, m0)
     GETTERSETTER(float, M1, m1)
@@ -97,7 +52,7 @@ class Matrix : public ::Matrix {
         return *this;
     }
 
-    bool operator==(const Matrix& other) {
+    bool operator==(const ::Matrix& other) {
         return m0 == other.m0
             && m1 == other.m1
             && m2 == other.m2
@@ -116,38 +71,26 @@ class Matrix : public ::Matrix {
             && m15 == other.m15;
     }
 
-    inline Matrix& SetProjection() {
-        ::SetMatrixProjection(*this);
-        return *this;
-    }
-
-    inline Matrix& SetModelview() {
-        ::SetMatrixModelview(*this);
-        return *this;
-    }
-
-    static Matrix GetModelview() {
-        return ::GetMatrixModelview();
-    }
-
-    static Matrix GetProjection() {
-        return ::GetMatrixProjection();
-    }
-
 #ifndef RAYLIB_CPP_NO_MATH
-    inline float Trace() {
+    /**
+     * Returns the trace of the matrix (sum of the values along the diagonal)
+     */
+    inline float Trace() const {
         return ::MatrixTrace(*this);
     }
 
-    inline Matrix Transpose() {
+    /**
+     * Transposes provided matrix
+     */
+    inline Matrix Transpose() const {
         return ::MatrixTranspose(*this);
     }
 
-    inline Matrix Invert() {
+    inline Matrix Invert() const {
         return ::MatrixInvert(*this);
     }
 
-    inline Matrix Normalize() {
+    inline Matrix Normalize() const {
         return ::MatrixNormalize(*this);
     }
 
@@ -155,19 +98,19 @@ class Matrix : public ::Matrix {
         return ::MatrixIdentity();
     }
 
-    Matrix Add(::Matrix right) {
+    Matrix Add(const ::Matrix& right) {
         return ::MatrixAdd(*this, right);
     }
 
-    Matrix operator+(const Matrix& matrix) {
+    Matrix operator+(const ::Matrix& matrix) {
             return ::MatrixAdd(*this, matrix);
     }
 
-    Matrix Subtract(::Matrix right) {
+    Matrix Subtract(const ::Matrix& right) {
         return ::MatrixSubtract(*this, right);
     }
 
-    Matrix operator-(const Matrix& matrix) {
+    Matrix operator-(const ::Matrix& matrix) {
         return ::MatrixSubtract(*this, matrix);
     }
 
@@ -199,11 +142,11 @@ class Matrix : public ::Matrix {
         return ::MatrixScale(x, y, z);
     }
 
-    Matrix Multiply(Matrix right) {
+    Matrix Multiply(const ::Matrix& right) const {
         return ::MatrixMultiply(*this, right);
     }
 
-    Matrix operator*(const Matrix& matrix) {
+    Matrix operator*(const ::Matrix& matrix) {
         return ::MatrixMultiply(*this, matrix);
     }
 
@@ -225,17 +168,26 @@ class Matrix : public ::Matrix {
         return ::MatrixLookAt(eye, target, up);
     }
 
-    inline float16 ToFloatV() {
+    inline float16 ToFloatV() const {
         return ::MatrixToFloatV(*this);
     }
 
     operator float16() {
         return ToFloatV();
     }
+
+    /**
+     * Set shader uniform value (matrix 4x4)
+     */
+    inline Matrix& SetShaderValue(::Shader shader, int uniformLoc) {
+        ::SetShaderValueMatrix(shader, uniformLoc, *this);
+        return *this;
+    }
+
 #endif
 
- protected:
-    inline void set(::Matrix mat) {
+ private:
+    inline void set(const ::Matrix& mat) {
         m0 = mat.m0;
         m1 = mat.m1;
         m2 = mat.m2;
