@@ -22,16 +22,16 @@ to prove for once and for all who the toughest of them all is.
 Sometime after becoming 'the toughest of 'em all', Nathan Woodcock enjoys a quiet school life with his girlfriend
 and nerdy buddy, Buddy.
 
-When Buddy arrives beaten, with the news that the schools are rising once more to find a new hardnoc, Woodcock sets out
+When Buddy arrives beaten, with the news that the schools are rising once more to find a new Hardnoc, Woodcock sets out
 to put them in their place once more.
 
 ## Plot Summary
 
 Months before the start of the game, Nathan Woodcock has become known as 'The Toughest of 'em All'. Using this title
 he has managed to create peace amongst the schools and stop bullying from taking place; however, that all changes when his
-friend, Buddy, arrives beaten with news that the schools are now rising up to find a new hardknock.
+friend, Buddy, arrives beaten with news that the schools are now rising up to find a new Hardknoc.
 
-Pissed, Woodcock leaves his girlfriend with Buddy and scives off school to prove once more that he is: The Toughest of 'em All.
+With eyes of fury, Woodcock leaves his girlfriend with Buddy and scives off school to prove once more that he is: The Toughest of 'em All.
 
 Heading to the closest school, where Buddy was attacked, Woodcock arrives at Chase Academy, a former comprehensive just like his own school.
 
