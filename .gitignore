@@ -1,6 +1,5 @@
 bin/
 lib/
-resources/
 LICENCE
 Makefile
 vendor/
