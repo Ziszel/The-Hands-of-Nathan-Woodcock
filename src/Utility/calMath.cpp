@@ -1,18 +1,18 @@
 #include "calMath.hpp"
 
-float VectorMagnitude(raylib::Vector2 vector)
+float VectorMagnitude(std::pair<float, float>vector)
 {
-	return sqrt((vector.x * vector.x) + (vector.y * vector.y));
+	return sqrt((vector.first * vector.first) + (vector.second * vector.second));
 }
 
-raylib::Vector2 UnitVectorisation(float mag, raylib::Vector2 vector)
+std::pair<float, float> UnitVectorisation(float mag, std::pair<float, float>vector)
 {
-	float x = (vector.x / mag);
-	float y = (vector.y / mag);
-	return raylib::Vector2(x, y);
+	float x = (vector.first / mag);
+	float y = (vector.second / mag);
+	return std::pair<float, float>(x, y);
 }
 
-float DistanceBetween(raylib::Vector2 v1, raylib::Vector2 v2)
+float DistanceBetween(std::pair<float, float>v1, std::pair<float, float>v2)
 {
-	return sqrt(v1.x - v2.x) * 2 + (v1.y - v2.y) * 2;
+	return sqrt(v1.first - v2.first) * 2 + (v1.second - v2.second) * 2;
 }

@@ -1,17 +1,27 @@
 #include <raylib-cpp.hpp>
-#include <nlohmann/json.hpp>
 #include <iostream>
+#include <boost/archive/text_oarchive.hpp>
+#include <boost/archive/text_iarchive.hpp>
+#include <boost/serialization/serialization.hpp>
+#include <boost/serialization/utility.hpp>
 #pragma once
 
-// "namespaces exist to avoid identical name conflicts.
-// Allow encompassing entire codebases into a project" - Da Gonz
 class Player
 {
 public:
+	friend class boost::serialization::access;
+
+	template<class Archive>
+	void serialize(Archive & ar, const unsigned int version)
+	{
+	    ar & position;
+	    ar & health;
+		ar & speed;
+	}
 	Texture2D texture;
-	raylib::Vector2 position;
-	raylib::Vector2 speed;
-	raylib::Vector2 direction;
+	std::pair<float, float> position;
+	std::pair<float, float> speed;
+	std::pair<float, float> direction;
 	const float maxSpeed = 12.0f;
 	const float acceleration = 8.0f;
 	const float friction = 0.92f;
@@ -22,7 +32,7 @@ public:
 	const float gravity = 10.0f;
 	bool inAir;
 
-	Player(Texture2D texture, raylib::Vector2 position);
+	Player(Texture2D texture, std::pair<float, float> position);
 	Player() = default;
 
 	void Update(float deltaTime);
@@ -31,6 +41,3 @@ public:
 	float setModifier(float deltaTime);
 	void Draw();
 };
-
-//void to_json(nlohmann::json &j, const Player &p);
-//void from_json(const nlohmann::json &j, Player &p);

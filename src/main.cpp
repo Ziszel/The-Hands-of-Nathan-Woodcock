@@ -41,17 +41,17 @@ int main()
 	Menu pauseMenu = Menu(menuTex, raylib::Vector2((float)screenWidth * 0.5 - 30, 25), "PAUSE", pauseOptions);
 
 	// Create game objects
-	Scrollable midGround = Scrollable(midGroundTex, raylib::Vector2(0.0f, 0.0f), 1, 2.0f);
+	Scrollable midGround = Scrollable(midGroundTex, std::pair<float, float>(0.0f, 0.0f), 1, 2.0f);
 
-	Scrollable backGround = Scrollable(backGroundTex, raylib::Vector2(0.0f, 0.0f), 0, 8.0f);
-	Player *player = new Player(playerTex, raylib::Vector2(screenWidth / 2, screenHeight / 2));
+	Scrollable backGround = Scrollable(backGroundTex, std::pair<float, float>(0.0f, 0.0f), 0, 8.0f);
+	Player *player = new Player(playerTex, std::pair<float, float>(screenWidth / 2, screenHeight / 2));
 	UI ui = UI();
 
 	std::array<Scrollable, 2> scrollables = {backGround, midGround};
 
 	// Camera
 	Camera2D camera = {0};
-	camera.target = (raylib::Vector2){player->position.x + 20, player->position.y + 20};
+	camera.target = (raylib::Vector2){player->position.first + 20, player->position.second + 20};
 	camera.offset = (raylib::Vector2){screenWidth / 2, screenHeight / 2};
 	camera.rotation = 0.0f;
 	camera.zoom = 1.0f;
@@ -82,7 +82,7 @@ int main()
 			updateScrollables(scrollables, *player);
 
 			// update the camera
-			camera.target = (raylib::Vector2){player->position.x + player->width + player->speed.x * 7, player->position.y + player->height};
+			camera.target = (raylib::Vector2){player->position.first + player->width + player->speed.first * 7, player->position.second + player->height};
 		}
 
 		// Draw
@@ -102,7 +102,8 @@ int main()
 			// Draw background layers
 			for (auto &s : scrollables)
 			{
-				DrawTextureEx(s.texture, s.position, 0.0f, 2.0f, WHITE);
+				raylib::Vector2 sPos = {s.position.first, s.position.second};
+				DrawTextureEx(s.texture, sPos, 0.0f, 2.0f, WHITE);
 			}
 
 			// Draw Player

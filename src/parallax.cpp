@@ -1,7 +1,7 @@
 #include "parallax.hpp"
 #include "Utility/calMath.hpp"
 
-Scrollable::Scrollable(Texture2D texture, raylib::Vector2 position, int order, float distance)
+Scrollable::Scrollable(Texture2D texture, std::pair<float, float>position, int order, float distance)
 	{
 		this->texture = texture;
 		this->position = position;
@@ -16,13 +16,13 @@ void updateScrollables(std::array<Scrollable, 2> &scrollables, Player player)
 	player.direction = UnitVectorisation(VectorMagnitude(player.position), player.position);
 	for (int i = 0; i < scrollables.size(); i++)
 	{
-		if (player.direction.x * player.speed.x > 0)
+		if (player.direction.first * player.speed.first > 0)
 		{
-			scrollables.at(i).position.x += (-player.speed.x / scrollables.at(i).distance);
+			scrollables.at(i).position.first += (-player.speed.first / scrollables.at(i).distance);
 		}
 		else
 		{
-			scrollables.at(i).position.x -= (+player.speed.x / scrollables.at(i).distance);
+			scrollables.at(i).position.first -= (+player.speed.first / scrollables.at(i).distance);
 		}
 	}
 }
