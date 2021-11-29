@@ -10,6 +10,7 @@
 #include <raylib-cpp.hpp>
 #include <array>
 #include <vector>
+#include <iostream>
 
 int main()
 {
@@ -35,6 +36,7 @@ int main()
 	// background entities (these are going to be linked to map so maybe I should handle these with map)
 	Texture2D midGroundTex = LoadTexture("resources/midground.png");
 	Texture2D backGroundTex = LoadTexture("resources/background.png");
+	
 	Texture2D menuTex = LoadTexture("resources/windowsxpbg.png");
 
 	// Create test menu objects
@@ -48,10 +50,18 @@ int main()
 	pauseOptions.push_back(cont);
 	Menu pauseMenu = Menu(menuTex, raylib::Vector2((float)screenWidth * 0.5 - 30, 25), "PAUSE", pauseOptions);
 
-	// Create game objects
-	Scrollable midGround = Scrollable(midGroundTex, std::pair<float, float>(0.0f, 0.0f), 1, 2.0f);
+	//map
+	Tile ground = Tile(groundTex);
+	Map map = Map("resources/maps/testMap.data");
+	std::vector<Tile> tiles;
+	tiles.push_back(ground);
 
-	Scrollable backGround = Scrollable(backGroundTex, std::pair<float, float>(0.0f, 0.0f), 0, 8.0f);
+	// Create game objects
+	// scrollStartPos will ALWAYS return the first non-zero element of a map (i.e., a drawn tile).
+	// This might not always be desireable but for now fits the use case well.
+	int scrollStartPos = map.LocateScrollablesDrawPos(tiles);
+	Scrollable midGround = Scrollable(midGroundTex, std::pair<float, float>(0.0f, scrollStartPos), 1, 2.0f);
+	Scrollable backGround = Scrollable(backGroundTex, std::pair<float, float>(0.0f, scrollStartPos), 0, 8.0f);
 	Player *player = new Player(playerTex, std::pair<float, float>(screenWidth / 2, screenHeight / 2));
 	UI ui = UI();
 
@@ -63,12 +73,6 @@ int main()
 	camera.offset = (raylib::Vector2){screenWidth / 2, screenHeight / 2};
 	camera.rotation = 0.0f;
 	camera.zoom = 1.0f;
-
-	//map
-	Tile ground = Tile(groundTex);
-	Map map = Map("resources/maps/testMap.data");
-	std::vector<Tile> tiles;
-	tiles.push_back(ground);
 
 	SetWindowPosition(600, 400);
 	// Main game loop
@@ -119,6 +123,9 @@ int main()
 			for (auto &s : scrollables)
 			{
 				raylib::Vector2 sPos = {s.position.first, s.position.second};
+				// std::cout << "sPos: ";
+				// std::cout << s.position.first << ", ";
+				// std::cout << s.position.second << "\n";
 				DrawTextureEx(s.texture, sPos, 0.0f, 2.0f, WHITE);
 			}
 

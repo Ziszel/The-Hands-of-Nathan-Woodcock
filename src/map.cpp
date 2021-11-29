@@ -4,7 +4,7 @@ Map::Map(std::string mapPath)
 {
     this->mapPath = mapPath;
     // this is how you resize a 2D vector, thank Jesus
-    mapData.resize(ROWS,std::vector<int>(COLS));
+    mapData.resize(ROWS, std::vector<int>(COLS));
     LoadMapData();
 }
 
@@ -27,11 +27,31 @@ void Map::LoadMapData()
             }
         }
     }
-    mapFile.close();  
-    
+    mapFile.close();
 }
 
-void Map::DrawMap(std::vector<Tile>tiles)
+int ::Map::LocateScrollablesDrawPos(std::vector<Tile> tiles)
+{
+    int count = 0;
+    for (int i = 0; i < ROWS; i++)
+    {
+        for (auto tile : tiles)
+        {
+            if (mapData[i][0] != 0)
+            {
+                std::cout << "mapData: " << mapData[i][0] << "\n";
+                // x should be drawn in place of COLS, not ROWS
+                return count;
+            }
+
+            count += TILESIZE;
+        }
+    }
+
+    return 0;
+}
+
+void Map::DrawMap(std::vector<Tile> tiles)
 {
     // output to console
     // for (int i = 0; i < ROWS; i++)
@@ -43,15 +63,16 @@ void Map::DrawMap(std::vector<Tile>tiles)
     //     std::cout << "\n";
     // }
 
-    int x = 0;
-    int y = 0;
+    int x = MAPSTART;
+    int y = MAPSTART;
 
     // output to screen
     for (int i = 0; i < ROWS; i++)
     {
         for (int j = 0; j < COLS; j++)
         {
-            for(auto tile : tiles)
+
+            for (auto tile : tiles)
             {
                 if (mapData[i][j] == tile.getId())
                 {
@@ -59,10 +80,9 @@ void Map::DrawMap(std::vector<Tile>tiles)
                     tile.DrawTile(x, y);
                 }
             }
-            
             x += TILESIZE;
         }
         y += TILESIZE;
-        x = 0;
+        x = MAPSTART;
     }
 }
