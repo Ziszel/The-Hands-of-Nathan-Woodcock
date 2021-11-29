@@ -5,6 +5,8 @@
 #include "option.hpp"
 #include "menu.hpp"
 #include "ui.hpp"
+#include "map.hpp"
+#include "tile.hpp"
 #include <raylib-cpp.hpp>
 #include <array>
 #include <vector>
@@ -13,8 +15,8 @@ int main()
 {
 
 	// Initialization
-	int screenWidth = 640;
-	int screenHeight = 480;
+	int screenWidth = 1280;
+	int screenHeight = 720;
 	float fps = 60.0f;
 	float deltaTime = 0.0f;
 
@@ -24,7 +26,13 @@ int main()
 	SetTargetFPS(fps);
 
 	// Load Resources
+	// object entities
 	Texture2D playerTex = LoadTexture("resources/player.png");
+
+	// Map entities
+	Texture2D groundTex = LoadTexture("resources/tiles/groundTex.png");
+
+	// background entities (these are going to be linked to map so maybe I should handle these with map)
 	Texture2D midGroundTex = LoadTexture("resources/midground.png");
 	Texture2D backGroundTex = LoadTexture("resources/background.png");
 	Texture2D menuTex = LoadTexture("resources/windowsxpbg.png");
@@ -55,6 +63,12 @@ int main()
 	camera.offset = (raylib::Vector2){screenWidth / 2, screenHeight / 2};
 	camera.rotation = 0.0f;
 	camera.zoom = 1.0f;
+
+	//map
+	Tile ground = Tile(groundTex);
+	Map map = Map("resources/maps/testMap.data");
+	std::vector<Tile> tiles;
+	tiles.push_back(ground);
 
 	SetWindowPosition(600, 400);
 	// Main game loop
@@ -98,6 +112,8 @@ int main()
 
 			// everything drawn within this mode is relational to the camera and not the screen
 			BeginMode2D(camera);
+
+			map.DrawMap(tiles);
 
 			// Draw background layers
 			for (auto &s : scrollables)
