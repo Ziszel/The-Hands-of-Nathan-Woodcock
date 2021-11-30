@@ -83,7 +83,6 @@ int main()
 		}
 		else
 		{
-
 			// Update
 			deltaTime = GetFrameTime();
 
@@ -101,6 +100,9 @@ int main()
 
 			// update the camera
 			camera.target = (raylib::Vector2){player->position.first + player->width + player->speed.first * 7, player->position.second + player->height};
+
+			// check for map collision
+			if (map.CheckMapCollision(*player, tiles)) { std::cout << "collided" << "\n"; }
 		}
 
 		// Draw

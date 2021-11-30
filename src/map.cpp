@@ -51,6 +51,40 @@ int ::Map::LocateScrollablesDrawPos(std::vector<Tile> tiles)
     return 0;
 }
 
+bool Map::CheckMapCollision(Player p, std::vector<Tile> tiles)
+{
+    int x = MAPSTART;
+    int y = MAPSTART;
+
+    // output to screen
+    for (int i = 0; i < ROWS; i++)
+    {
+        for (int j = 0; j < COLS; j++)
+        {
+
+            for (auto tile : tiles)
+            {
+                if (mapData[i][j] != 0)
+                {
+                    // AABB player and tile, this should be a separate function
+                    if (p.position.first < x + tile.width &&
+                        p.position.first + p.width > x &&
+                        p.position.second < y + tile.height &&
+                        p.position.second + p.height > y)
+                        {
+                            return true;
+                        }
+                    }
+                }
+            x += TILESIZE;
+        }
+        y += TILESIZE;
+        x = MAPSTART;
+    }
+
+    return false;
+}
+
 void Map::DrawMap(std::vector<Tile> tiles)
 {
     // output to console

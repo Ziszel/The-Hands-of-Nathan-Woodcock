@@ -9,6 +9,8 @@ private:
     Texture2D texture;
 
 public:
+    const int width = 64;
+    const int height = 64;
     Tile(Texture2D texture);
     void DrawTile(int x, int y);
     int getId();

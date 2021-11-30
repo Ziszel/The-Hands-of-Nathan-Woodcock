@@ -1,5 +1,6 @@
 #include "tile.hpp"
 #include "parallax.hpp"
+#include "player.hpp"
 #include <iostream>
 #include <fstream>
 #include <vector>
@@ -25,4 +26,5 @@ public:
     void LoadMapData(); // this will load in the map data from a file, and fill mapData with it
     void DrawMap(std::vector<Tile> tiles);
     int LocateScrollablesDrawPos(std::vector<Tile> tiles);
+    bool CheckMapCollision(Player p, std::vector<Tile> tiles);
 };
