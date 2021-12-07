@@ -4,14 +4,17 @@ Player::Player(Texture2D texture, std::pair<float, float> position)
 {
     this->texture = texture;
     this->position = position;
+    this->positionOld = position;
     this->speed = std::pair<float, float>(0.0f, 0.0f);
-    this->inAir = false;
-    this->height = texture.height * 0.5;
-    this->width = texture.width * 0.5;
+    this->inAir = true;
+    this->height = texture.height * 2;
+    this->width = texture.width * 2;
 }
 
 void Player::Update(float deltaTime)
 {
+    positionOld = position;
+
     // Checks if player has input a key and moves if required
     int key = GetKeyPressed();
 
@@ -20,11 +23,9 @@ void Player::Update(float deltaTime)
 
     // this controls whether or not the player can jump, replace with tiled
     // logic once implemented
-    if (this->position.second > 240)
+    if (this->speed.second == 0)
     {
         this->inAir = false;
-        this->speed.second = 0;
-        this->position.second = 240;
     }
 
     // Test for health system, to be removed
@@ -37,7 +38,7 @@ void Player::Update(float deltaTime)
     }
 
     // apply gravity if the player is in the air
-    if (this->position.second < this->groundHeight && this->inAir == true)
+    if (this->inAir == true)
     {
         // player must now be in the air, stop them jumping again,
         // and slowly bring them down.

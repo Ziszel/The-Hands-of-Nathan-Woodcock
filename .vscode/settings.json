@@ -69,6 +69,7 @@
         "numbers": "cpp",
         "semaphore": "cpp",
         "stop_token": "cpp",
-        "complex": "cpp"
+        "complex": "cpp",
+        "*.m": "cpp"
     }
 }

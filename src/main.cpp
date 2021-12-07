@@ -74,6 +74,8 @@ int main()
 	camera.rotation = 0.0f;
 	camera.zoom = 1.0f;
 
+	std::cout << player->width << "\n";
+
 	SetWindowPosition(600, 400);
 	// Main game loop
 	while (!w.ShouldClose()) // Detect window close button or ESC key
@@ -102,7 +104,15 @@ int main()
 			camera.target = (raylib::Vector2){player->position.first + player->width + player->speed.first * 7, player->position.second + player->height};
 
 			// check for map collision
-			if (map.CheckMapCollision(*player, tiles)) { std::cout << "collided" << "\n"; }
+			// y and x are still being implemented together, how do I split them?
+			// how do I work out that player is landing on a tile?
+			if (map.CheckMapCollision(*player, tiles)) 
+			{ 
+				player->position.first = player->positionOld.first;
+				player->speed.first = -player->speed.first;
+				player->position.second = player->positionOld.second;
+				player->speed.second = 0;
+			}
 		}
 
 		// Draw

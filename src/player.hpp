@@ -20,12 +20,12 @@ public:
 	}
 	Texture2D texture;
 	std::pair<float, float> position;
+	std::pair<float, float> positionOld;
 	std::pair<float, float> speed;
 	std::pair<float, float> direction;
 	const float maxSpeed = 12.0f;
 	const float acceleration = 8.0f;
 	const float friction = 0.92f;
-	const int groundHeight = 240;
 	float width;
 	float height;
 	int health = 3;
