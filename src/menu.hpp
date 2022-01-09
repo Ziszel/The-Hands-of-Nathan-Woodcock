@@ -1,10 +1,10 @@
+#pragma once
 #include "option.hpp"
 #include <vector>
 #include <raylib-cpp.hpp>
 #include <string>
 #include <cstring>
 #include <iostream>
-#pragma once
 
 class Menu
 {

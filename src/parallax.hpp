@@ -1,7 +1,7 @@
+#pragma once
 #include "player.hpp"
 #include <raylib-cpp.hpp>
 #include <array>
-#pragma once
 
 // A class which represents an object to be scrolled.
 class Scrollable

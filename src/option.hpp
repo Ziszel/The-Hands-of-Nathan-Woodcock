@@ -1,8 +1,8 @@
+#pragma once
 #include <raylib-cpp.hpp>
 #include <string>
 #include <cstring>
 #include <iostream>
-#pragma once
 
 // options will have:
 // - text

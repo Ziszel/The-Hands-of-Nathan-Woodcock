@@ -110,7 +110,7 @@ int main()
 			{ 
 				player->position.first = player->positionOld.first;
 				player->speed.first = -player->speed.first;
-				player->position.second = player->positionOld.second;
+				//player->position.second = player->positionOld.second;
 				player->speed.second = 0;
 			}
 		}

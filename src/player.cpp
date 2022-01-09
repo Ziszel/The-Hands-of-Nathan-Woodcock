@@ -9,6 +9,10 @@ Player::Player(Texture2D texture, std::pair<float, float> position)
     this->inAir = true;
     this->height = texture.height * 2;
     this->width = texture.width * 2;
+
+    this->centre = {position.first, position.second};
+    this->extends = extends = { width * 0.5, height * 0.5 };
+    this->aabb.setVar(centre, extends);
 }
 
 void Player::Update(float deltaTime)

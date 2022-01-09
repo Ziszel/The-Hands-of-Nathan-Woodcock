@@ -1,3 +1,4 @@
+#pragma once
 #include "tile.hpp"
 #include "parallax.hpp"
 #include "player.hpp"
@@ -8,7 +9,6 @@
 #include <iomanip>
 #include <typeinfo>
 #include <raylib-cpp.hpp>
-#pragma once
 
 #define TILESIZE 64
 #define MAPSTART 0

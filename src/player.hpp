@@ -1,10 +1,11 @@
+#pragma once
+#include "AABB.hpp"
 #include <raylib-cpp.hpp>
 #include <iostream>
 #include <boost/archive/text_oarchive.hpp>
 #include <boost/archive/text_iarchive.hpp>
 #include <boost/serialization/serialization.hpp>
 #include <boost/serialization/utility.hpp>
-#pragma once
 
 class Player
 {
@@ -31,6 +32,9 @@ public:
 	int health = 3;
 	const float gravity = 10.0f;
 	bool inAir;
+	std::pair<float, float> centre;
+	std::pair<float, float> extends;
+	AABB aabb();
 
 	Player(Texture2D texture, std::pair<float, float> position);
 	Player() = default;

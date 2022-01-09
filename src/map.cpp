@@ -64,22 +64,21 @@ bool Map::CheckMapCollision(Player p, std::vector<Tile> tiles)
 
             for (auto tile : tiles)
             {
+                // update the centre of the tile
+                // add flag so that this runs only once.
+                tile.centre.first = x + TILESIZE / 2;
+                tile.centre.second = y + TILESIZE / 2;
+
                 if (mapData[i][j] != 0)
                 {
-                    // AABB player and tile, this should be a separate function
-                    if (p.position.first < x + tile.width &&
-                        p.position.first + p.width > x &&
-                        p.position.second < y + tile.height &&
-                        p.position.second + p.height > y)
-                        {
-                            return true;
-                        }
-                    }
+                    // AABB player and tile (the '()' on aabb here looks wrong...)
+                    return p.aabb.test(tile.aabb);
                 }
-            x += TILESIZE;
-        }
+                x += TILESIZE;
+            }
         y += TILESIZE;
         x = MAPSTART;
+        }
     }
 
     return false;
