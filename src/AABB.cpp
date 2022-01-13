@@ -12,7 +12,7 @@ void AABB::setVar(std::pair<float, float> centre, std::pair<float, float> extend
     this->extends = extends;
 }
 
-bool AABB::test(AABB other)
+bool AABB::testCollision(AABB other)
 {
     if (this->max().first < other.min().first ||
     this->max().second < other.min().second ||

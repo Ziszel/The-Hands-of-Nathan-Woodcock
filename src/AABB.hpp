@@ -13,7 +13,7 @@ public:
     AABB(std::pair<float, float> centre, std::pair<float, float> extends);
 
     void setVar(std::pair<float, float> centre, std::pair<float, float> extends);
-    bool test(AABB other);
+    bool testCollision(AABB other);
     // this will return a vector that is the top left of a position
     std::pair<float, float> min();
     // this will return a vector that is the bottom right of a position

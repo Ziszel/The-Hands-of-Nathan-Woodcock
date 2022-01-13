@@ -17,7 +17,7 @@ public:
     const int height = 64;
     std::pair<float, float> centre = {0,0};
     std::pair<float, float> extends = {TILESIZE * 0.5,TILESIZE * 0.5};
-    AABB aabb();
+    AABB aabb;
 
     Tile(Texture2D texture);
     void DrawTile(int x, int y);

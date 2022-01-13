@@ -72,7 +72,7 @@ bool Map::CheckMapCollision(Player p, std::vector<Tile> tiles)
                 if (mapData[i][j] != 0)
                 {
                     // AABB player and tile (the '()' on aabb here looks wrong...)
-                    return p.aabb.test(tile.aabb);
+                    return p.aabb.testCollision(tile.aabb);
                 }
                 x += TILESIZE;
             }

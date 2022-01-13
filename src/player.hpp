@@ -34,7 +34,7 @@ public:
 	bool inAir;
 	std::pair<float, float> centre;
 	std::pair<float, float> extends;
-	AABB aabb();
+	AABB aabb;
 
 	Player(Texture2D texture, std::pair<float, float> position);
 	Player() = default;
